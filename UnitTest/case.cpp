@@ -1,11 +1,12 @@
-#define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include <MyClass.h>
+#include <iostream>
 
 TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
 
     MyClass a;
 
+    std::cout << "hello world"<< std::endl;
     std::vector<int> v( 5 );
 
     REQUIRE( v.size() == 5 );

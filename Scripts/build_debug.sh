@@ -25,6 +25,7 @@ cd Debug
 #cmake ../.. "-DCMAKE_TOOLCHAIN_FILE=/root/vcpkg/scripts/buildsystems/vcpkg.cmake"  "-DCMAKE_BUILD_TYPE=Debug"
 # CMAKE_TOOLCHAIN_FILE=./emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
 # DEMSCRIPTEN_ROOT_PATH=./emsdk/fastcomp/emscripten
+VERBOSE=1
 cmake ../.. "-DCMAKE_BUILD_TYPE=Debug"
 cmake --build .
 
