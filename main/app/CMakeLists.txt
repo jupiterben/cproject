@@ -6,16 +6,16 @@ file(GLOB APP_SOURCE *.cpp)
 source_group("Header" FILES ${APP_HEADER})
 source_group("Source" FILES ${APP_SOURCE})
 
-add_executable(MyApp ${APP_SOURCE})
+add_executable(app ${APP_SOURCE})
 
-target_include_directories(MyApp
-    PRIVATE . ../MyLib
+target_include_directories(app
+    PRIVATE . ../lib
 )
-target_link_libraries(MyApp 
-    MyLib
+target_link_libraries(app 
+    lib
 )
 
 #编译选项
 if(MSVC)
-  target_compile_options(MyApp PRIVATE /W3)
+  target_compile_options(app PRIVATE /W3)
 endif()

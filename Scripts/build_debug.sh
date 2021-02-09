@@ -16,10 +16,10 @@ cd $CURRENT_DIR
 
 #创建编译目录
 cd ..
-mkdir Build
-cd Build
-mkdir Debug
-cd Debug
+mkdir build
+cd build
+mkdir debug
+cd debug
 
 # 使用cmake编译
 #cmake ../.. "-DCMAKE_TOOLCHAIN_FILE=/root/vcpkg/scripts/buildsystems/vcpkg.cmake"  "-DCMAKE_BUILD_TYPE=Debug"

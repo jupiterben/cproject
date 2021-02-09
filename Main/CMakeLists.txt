@@ -1,2 +1,2 @@
-add_subdirectory(MyApp)
-add_subdirectory(MyLib)
+add_subdirectory(app)
+add_subdirectory(lib)

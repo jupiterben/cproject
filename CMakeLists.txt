@@ -19,9 +19,9 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 endif()
 
-add_subdirectory(Main)
-add_subdirectory(Examples)
-add_subdirectory(UnitTest)
+add_subdirectory(main)
+#add_subdirectory(examples)
+#add_subdirectory(test)
 
 
 

@@ -7,13 +7,13 @@ file(GLOB SOURCE *.cpp)
 source_group("Header" FILES ${HEADER})
 source_group("Source" FILES ${SOURCE})
 
-add_library(MyLib ${SOURCE})
+add_library(lib ${SOURCE})
 
-target_include_directories(MyLib
+target_include_directories(lib
    PRIVATE .
 )
 
 #编译选项
 if(MSVC)
-  target_compile_options(MyLib PRIVATE /W3)
+  target_compile_options(lib PRIVATE /W3)
 endif()
