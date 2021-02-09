@@ -9,7 +9,7 @@ source_group("Source" FILES ${SOURCE})
 
 add_executable(UnitTest ${SOURCE})
 
-target_include_directories(UnitTest
+target_include_directories(Test
     PRIVATE ../Main/MyLib ../ThirdParty/Catch
 )
 target_link_libraries(UnitTest 

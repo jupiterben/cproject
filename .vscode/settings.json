@@ -2,5 +2,8 @@
     "cmake.configureOnOpen": false,
     "files.associations": {
         "iosfwd": "cpp"
+    },
+    "cmake.configureSettings": {
+        "CMAKE_TOOLCHAIN_FILE": "${workspaceRoot}/../vcpkg/scripts/buildsystems/vcpkg.cmake"
     }
 }

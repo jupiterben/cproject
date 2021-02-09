@@ -2,6 +2,10 @@
 file(GLOB APP_HEADER *.h) 
 file(GLOB APP_SOURCE *.cpp) 
 
+
+#find 3rd party
+find_package(CGAL CONFIG REQUIRED)
+
 #在IDE工程中将文件进行分组(e.g. Visual Studio)
 source_group("Header" FILES ${APP_HEADER})
 source_group("Source" FILES ${APP_SOURCE})
@@ -12,7 +16,7 @@ target_include_directories(app
     PRIVATE . ../lib
 )
 target_link_libraries(app 
-    lib
+    lib CGAL::CGAL
 )
 
 #编译选项

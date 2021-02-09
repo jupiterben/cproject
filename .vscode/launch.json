@@ -11,7 +11,7 @@
             // Resolved by CMake Tools:
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
                 {
@@ -44,18 +44,6 @@
                     "ignoreFailures": true
                 }
             ]
-        },
-        {
-            "name": "(lldb) hello_word", // 项目名字
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/build/main/app/app", //修改这里路径指向刚才生成的可执行程序
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceRoot}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
         }
     ]
 }
