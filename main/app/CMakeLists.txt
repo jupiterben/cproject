@@ -2,9 +2,7 @@
 file(GLOB APP_HEADER *.h) 
 file(GLOB APP_SOURCE *.cpp) 
 
-
-#find 3rd party
-find_package(CGAL CONFIG REQUIRED)
+find_package(CGAL REQUIRED COMPONENTS Core)
 
 #在IDE工程中将文件进行分组(e.g. Visual Studio)
 source_group("Header" FILES ${APP_HEADER})
