@@ -8,16 +8,14 @@ find_package(CGAL REQUIRED COMPONENTS Core)
 source_group("Header" FILES ${APP_HEADER})
 source_group("Source" FILES ${APP_SOURCE})
 
-add_executable(app ${APP_SOURCE})
+project(myapp)
 
-target_include_directories(app
-    PRIVATE . ../lib
-)
-target_link_libraries(app 
-    lib CGAL::CGAL
-)
+add_executable(${PROJECT_NAME} ${APP_SOURCE})
+
+target_include_directories(${PROJECT_NAME} PRIVATE . ../mylib)
+target_link_libraries(${PROJECT_NAME} mylib CGAL::CGAL)
 
 #编译选项
 if(MSVC)
-  target_compile_options(app PRIVATE /W3)
+  target_compile_options(${PROJECT_NAME} PRIVATE /W3)
 endif()

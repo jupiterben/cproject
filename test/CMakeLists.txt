@@ -2,12 +2,11 @@
 
 file(GLOB HEADER *.h) 
 file(GLOB SOURCE *.cpp) 
-
 #在IDE工程中将文件进行分组(e.g. Visual Studio)
 source_group("Header" FILES ${HEADER})
 source_group("Source" FILES ${SOURCE})
 
-add_executable(UnitTest ${SOURCE})
+add_executable(Test ${SOURCE})
 
 target_include_directories(Test
     PRIVATE ../Main/MyLib ../ThirdParty/Catch

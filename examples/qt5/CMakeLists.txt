@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.1.0)
 
-project(helloworld VERSION 1.0.0 LANGUAGES CXX)
+project(qt5Example VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,14 +13,13 @@ set(CMAKE_AUTOUIC ON)
 if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
-
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-set(PROJECTNAME "helloworld")
 
-add_executable(PROJECTNAME
-    mainwindow.ui
-    mainwindow.cpp
-    main.cpp
-    resources.qrc
-)
-target_link_libraries(PROJECTNAME Qt5::Widgets)
+file(GLOB APP_HEADER *.h) 
+file(GLOB APP_SOURCE *.cpp *.qrc *.ui) 
+#在IDE工程中将文件进行分组(e.g. Visual Studio)
+source_group("Header" FILES ${APP_HEADER})
+source_group("Source" FILES ${APP_SOURCE})
+
+add_executable(${PROJECT_NAME} ${APP_SOURCE})
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
