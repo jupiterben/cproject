@@ -28,7 +28,7 @@ find_package(CGAL REQUIRED COMPONENTS Core)
 project(cgalExample)
 
 add_executable(${PROJECT_NAME} ${APP_SOURCE})
-target_link_libraries(${PROJECT_NAME} CGAL::CGAL)
+target_link_libraries(${PROJECT_NAME} PRIVATE  CGAL::CGAL)
 
 #编译选项
 if(MSVC)
