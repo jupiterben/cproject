@@ -4,7 +4,6 @@ project(CProject)
 
 set(CMAKE_CXX_STANDARD 14)
 
-
 if(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG   "-Od" )             # 调试包不优化
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG " )   # release包优化
@@ -23,6 +22,8 @@ endif()
 #add_subdirectory(main)
 add_subdirectory(examples)
 #add_subdirectory(test)
+
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 
 
 

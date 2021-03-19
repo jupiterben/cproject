@@ -1,10 +1,16 @@
 {
     "cmake.configureOnOpen": true,
     "files.associations": {
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "xstring": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "xiosbase": "cpp"
     },
     "cmake.configureSettings": {
-        "CMAKE_TOOLCHAIN_FILE": "/usr/local/Cellar/vcpkg/2020.11-1/libexec/scripts/buildsystems/vcpkg.cmake"
+        "DVCPKG_TARGET_TRIPLET":"x64-windows",
+        "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
     },
     "cSpell.words": [
         "immer"

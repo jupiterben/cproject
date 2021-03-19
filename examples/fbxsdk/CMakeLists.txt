@@ -7,7 +7,7 @@ source_group("Source" FILES ${APP_SOURCE})
 
 project(fbxsdkExample)
 
-find_package(FBXSDK CONFIG REQUIRED)
+find_package(FBX CONFIG REQUIRED)
 
 add_executable(${PROJECT_NAME} ${APP_SOURCE})
 target_link_libraries(${PROJECT_NAME} PRIVATE immer)
