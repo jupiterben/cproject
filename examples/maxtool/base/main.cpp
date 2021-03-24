@@ -46,12 +46,12 @@ void BaseImpl(const std::string &path, const std::string &outPath)
     // xaf part
     std::string xafFile = outPath + "temp.xaf";
     {
-        TiXmlDocument xafDoc;
+        //TiXmlDocument xafDoc;
         auto xafNode = rootNode->FirstChild("MaxAnimation");
-        //saveNodeToFile(xafNode, xafFile.c_str());
-        auto clonedXafNode = xafNode->Clone();
-        xafDoc.LinkEndChild(clonedXafNode);
-        xafDoc.SaveFile(xafFile.c_str());
+        saveNodeToFile(xafNode, xafFile.c_str());
+        //auto clonedXafNode = xafNode->Clone();
+        //xafDoc.LinkEndChild(clonedXafNode);
+        //xafDoc.SaveFile(xafFile.c_str());
     }
 
     logger.LogTime("Get Bip Part");
