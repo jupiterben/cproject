@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 #include <nlohmann/json.hpp>
+#include <unordered_map>
+#include <map>
+
 using json = nlohmann::json;
 
 #include <fbxsdk.h>
@@ -129,7 +132,8 @@ public:
 		std::vector<json> childNodes;
 		for (int j = 0; j < pNode->GetChildCount(); j++)
 			childNodes.push_back(nodeToJSON(pNode->GetChild(j)));
-		obj["childNodes"] = childNodes;
+		if (!childNodes.empty())
+			obj["childNodes"] = childNodes;
 
 		// Print the node's attributes.
 		json attrs(json::value_t::object);
@@ -142,7 +146,32 @@ public:
 			attr["type"] = typeName;
 			attrs[attrName] = attr;
 		}
-		obj["attrs"] = attrs;
+		if (!attrs.empty())
+			obj["attrs"] = attrs;
 		return obj;
+	}
+
+	void exportToASCII(const char *lFilename)
+	{
+		// Create an exporter.
+		FbxExporter *lExporter = FbxExporter::Create(lSdkManager, "");
+
+		auto ioSettings = lSdkManager->GetIOSettings();
+		// Set the FbxIOSettings EXP_FBX_EMBEDDED property to true.
+		ioSettings->SetBoolProp(EXP_FBX_EMBEDDED, true);
+		// Get the appropriate file format.
+		int lFileFormat = lSdkManager->GetIOPluginRegistry()->FindWriterIDByDescription("FBX ascii (*.fbx)");
+		// Initialize the exporter to embed the scene's media into the exported file.
+		bool lExportStatus = lExporter->Initialize(lFilename, lFileFormat, lSdkManager->GetIOSettings());
+		if (!lExportStatus)
+		{
+			printf("Call to FbxExporter::Initialize() failed.\n");
+			printf("Error returned: %s\n\n", lExporter->GetStatus().GetErrorString());
+		}
+		else
+		{
+		}
+		lExporter->Export(lScene);
+		SAFE_DESTROY(lExporter);
 	}
 };

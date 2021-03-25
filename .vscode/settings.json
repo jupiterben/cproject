@@ -6,7 +6,8 @@
         "memory": "cpp",
         "ostream": "cpp",
         "iostream": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "unordered_map": "cpp"
     },
     "cmake.configureSettings": {
         "DVCPKG_TARGET_TRIPLET": "x64-windows",
