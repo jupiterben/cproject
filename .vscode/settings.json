@@ -10,7 +10,8 @@
         "unordered_map": "cpp",
         "xlocbuf": "cpp",
         "codecvt": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "functional": "cpp"
     },
     "cmake.configureSettings": {
         "DVCPKG_TARGET_TRIPLET": "x64-windows",

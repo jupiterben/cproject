@@ -92,13 +92,12 @@ json DumpTexture(Texmap *tex, Class_ID cid, int subNo, float amt)
 
 	TSTR className;
 	tex->GetClassName(className);
+	
 	dump[_T("className")] = (className);
 	dump[_T("mapID")] = (GetMapID(cid, subNo));
 
-	TSTR texName = FixupName(tex->GetName());
-	dump[ID_TEXNAME] = texName;
-	TSTR classNameStr = FixupName(className);
-	dump[ID_TEXCLASS] = classNameStr;
+	dump[ID_TEXNAME] = tex->GetName();
+	dump[ID_TEXCLASS] = className;
 	// If we include the subtexture ID, a parser could be smart enough to get
 	// the class name of the parent texture/material and make it mean something.
 	dump[ID_TEXSUBNO] = subNo;
@@ -211,23 +210,23 @@ void ExportNodeHeader(INode *node, TCHAR *type, json &dump)
 
 void DumpMatrix3(const Matrix3 *m, json &dump)
 {
-	dump[_T("MatrixInRow")] = Format(*m);  
+	dump[_T("MatrixInRow")] = Format(*m);
 	// Decompose the matrix and dump the contents
-	AffineParts ap;
-	float rotAngle;
-	Point3 rotAxis;
-	float scaleAxAngle;
-	Point3 scaleAxis;
-	decomp_affine(*m, &ap);
-	// Quaternions are dumped as angle axis.
-	AngAxisFromQ(ap.q, &rotAngle, rotAxis);
-	AngAxisFromQ(ap.u, &scaleAxAngle, scaleAxis);
-	dump[ID_TM_POS] = Format(ap.t);
-	dump[ID_TM_ROTAXIS] = Format(rotAxis);
-	dump[ID_TM_ROTANGLE] = Format(rotAngle);
-	dump[ID_TM_SCALE] = Format(ap.k);
-	dump[ID_TM_SCALEAXIS] = Format(scaleAxis);
-	dump[ID_TM_SCALEAXISANG] = Format(scaleAxAngle);
+	// AffineParts ap;
+	// float rotAngle;
+	// Point3 rotAxis;
+	// float scaleAxAngle;
+	// Point3 scaleAxis;
+	// decomp_affine(*m, &ap);
+	// // Quaternions are dumped as angle axis.
+	// AngAxisFromQ(ap.q, &rotAngle, rotAxis);
+	// AngAxisFromQ(ap.u, &scaleAxAngle, scaleAxis);
+	// dump[ID_TM_POS] = Format(ap.t);
+	// dump[ID_TM_ROTAXIS] = Format(rotAxis);
+	// dump[ID_TM_ROTANGLE] = Format(rotAngle);
+	// dump[ID_TM_SCALE] = Format(ap.k);
+	// dump[ID_TM_SCALEAXIS] = Format(scaleAxis);
+	// dump[ID_TM_SCALEAXISANG] = Format(scaleAxAngle);
 }
 // transform
 json ExportNodeTM(INode *node)
@@ -672,21 +671,23 @@ void ExportGeomObject(INode *node, json &dump)
 	}
 }
 
+json dumpControl(Control* control){
+	json dump(json::value_t::object);
+
+
+	return dump;
+}
+
 json dumpNode(INode *node)
 {
 	json dump(json::value_t::object);
-	dump[_T("selected")] = node->Selected();
+	dump[_T("selected")] = node->Selected() ? true : false;
 
-	MSTR className;
-	node->GetClassName(className);
+	MSTR className; node->GetClassName(className);
 	dump[_T("nodeClass")] = className;
 
-	if (node->IsGroupHead())
-	{
-		TSTR nodeName = FixupName(node->GetName());
-		dump[ID_NODE_NAME] = nodeName;
-	}
-
+	dump[ID_NODE_NAME] = FixupName(node->GetName());
+	
 	ObjectState os = node->EvalWorldState(0);
 	// The obj member of ObjectState is the actual object we will export.
 	if (os.obj)
@@ -718,7 +719,7 @@ json dumpNode(INode *node)
 	{
 		childNodes.push_back(dumpNode(node->GetChildNode(c)));
 	}
-	dump[_T("childNodes")] = childNodes;
+	dump[_T("children")] = childNodes;
 	return dump;
 }
 
@@ -726,7 +727,7 @@ json ExportKernel::export2JSON(Interface *ip)
 {
 	json dump(json::value_t::object);
 	dump[_T("globalInfo")] = ExportGlobalInfo(ip);
-	dump[_T("rootNode")] = dumpNode(ip->GetRootNode());
+	dump[ID_SCENE] = dumpNode(ip->GetRootNode());
 	// Export list of material definitions
 	// ExportMaterialList();
 	return dump;
