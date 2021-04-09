@@ -3,6 +3,7 @@
 # add_subdirectory(immer)
 # add_subdirectory(fbxsdk/viewer)
 # add_subdirectory(tinyxml)
-add_subdirectory(maxplugin/jsonexp)
+# add_subdirectory(maxplugin/jsonexp)
 # add_subdirectory(wpf)
 # add_subdirectory(maxtool)
+add_subdirectory(dropfile)
