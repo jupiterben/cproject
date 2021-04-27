@@ -23,8 +23,8 @@ endif()
 set(CMAKE_SUPPRESS_REGENERATION true)  # 不生成ZERO_CHECK工程 这个工程用于修改cmake文件后重新运行cmake命令
 
 
-#add_subdirectory(main)
-add_subdirectory(examples)
+add_subdirectory(main)
+#add_subdirectory(examples)
 #add_subdirectory(test)
 
 
