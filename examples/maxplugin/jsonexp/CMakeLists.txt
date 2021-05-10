@@ -7,6 +7,8 @@ ENDIF()
 find_package(3DSMAX)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(rapidjson CONFIG REQUIRED)
+find_package(CppUnit CONFIG REQUIRED)
+
 
 set(target_name jsonexp)
 set(target_ext .dle)

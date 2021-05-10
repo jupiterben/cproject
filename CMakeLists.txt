@@ -13,7 +13,7 @@ if(MSVC)
 elseif(EMSCRIPTEN)
   set(CMAKE_CXX_FLAGS_DEBUG "-g4")
   set(CMAKE_EXECUTABLE_SUFFIX ".js")
-  #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s SINGLE_FILE=1 -s WASM=1" CACHE STRING "")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s SINGLE_FILE=1 -s WASM=1" CACHE STRING "")
 else()
   set(CMAKE_CXX_FLAGS_DEBUG "-g")
   set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
@@ -22,12 +22,6 @@ endif()
 
 set(CMAKE_SUPPRESS_REGENERATION true)  # 不生成ZERO_CHECK工程 这个工程用于修改cmake文件后重新运行cmake命令
 
-
 add_subdirectory(main)
-#add_subdirectory(examples)
-#add_subdirectory(test)
-
-
-
-
+add_subdirectory(examples)
 
