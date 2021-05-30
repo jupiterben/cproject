@@ -1,9 +1,20 @@
 {
     "cmake.configureOnOpen": true,
     "files.associations": {
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "xstring": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "xiosbase": "cpp",
+        "unordered_map": "cpp",
+        "xlocbuf": "cpp",
+        "codecvt": "cpp",
+        "vector": "cpp",
+        "functional": "cpp"
     },
     "cmake.configureSettings": {
+        "DVCPKG_TARGET_TRIPLET": "x64-windows",
         "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
     },
     "cSpell.words": [

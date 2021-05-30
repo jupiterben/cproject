@@ -1,4 +1,5 @@
 #include <immer/vector.hpp>
+
 int main()
 {
     const auto v0 = immer::vector<int>{};
