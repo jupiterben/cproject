@@ -12,7 +12,13 @@
         "codecvt": "cpp",
         "vector": "cpp",
         "functional": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "utility": "cpp",
+        "list": "cpp",
+        "xutility": "cpp",
+        "tuple": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp"
     },
     "cmake.configureSettings": {
         "DVCPKG_TARGET_TRIPLET": "x64-windows",

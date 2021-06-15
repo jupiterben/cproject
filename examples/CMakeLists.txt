@@ -1,5 +1,5 @@
 # add_subdirectory(cgal)
 # add_subdirectory(csharp)
 # add_subdirectory(fbxsdk)
-add_subdirectory(xml)
+# add_subdirectory(xml)
 # add_subdirectory(json)

@@ -37,6 +37,6 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -W4 ${MSVC_DISABLED_WARNINGS_STR}")
 endif()
 
-# add_subdirectory(main)
-add_subdirectory(examples)
+add_subdirectory(main)
+#add_subdirectory(examples)
 
