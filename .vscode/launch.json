@@ -34,8 +34,8 @@
                 "MIMode": "lldb"
             },
             "windows": {
-                "MIMode": "gdb",
-                "miDebuggerPath": "gdb.exe"
+                // "MIMode": "gdb",
+                // "miDebuggerPath": "gdb.exe"
             },
             "setupCommands": [
                 {
