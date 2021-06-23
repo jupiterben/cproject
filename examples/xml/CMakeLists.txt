@@ -8,9 +8,9 @@ source_group("Source" FILES ${APP_SOURCE})
 set(target_name xml)
 add_executable(${target_name} ${APP_SOURCE})
 
-# google benchmark
-find_package(benchmark CONFIG REQUIRED)
-target_link_libraries(${target_name} PRIVATE benchmark::benchmark benchmark::benchmark_main)
+# # google benchmark
+# find_package(benchmark CONFIG REQUIRED)
+# target_link_libraries(${target_name} PRIVATE benchmark::benchmark benchmark::benchmark_main)
 
 # tinyxml 
 find_package(tinyxml CONFIG REQUIRED)
