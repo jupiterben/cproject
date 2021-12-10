@@ -6,6 +6,7 @@
 #include <memory>
 #include <fstream>
 #include "./base64.h"
+#include "../language.h"
 
 TiXmlDocument *readXMLDoc(const std::string &fileName)
 {
@@ -43,6 +44,9 @@ void BaseImpl(const std::string &path, const std::string &outPath)
 
     logger.LogTime("Get XAF Part");
     auto rootNode = xmlDoc->FirstChildElement("Max_Custom_Anim");
+
+    bool transRes = lang::XAF::GetInstnace()->Translate(rootNode, lang::LanguageType::CHS, lang::LanguageType::ENU);
+
     // xaf part
     std::string xafFile = outPath + "temp.xaf";
     {
