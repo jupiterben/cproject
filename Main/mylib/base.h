@@ -86,6 +86,12 @@ protected:
 	}
 };
 
+class Number : VarT<NumberImpl>
+{
+public:
+	Number() {}
+};
+
 class IFunctorImpl : public IImpl
 {
 	var result;
