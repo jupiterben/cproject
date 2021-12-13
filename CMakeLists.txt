@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(CProject)
+## VCPKG
+SET(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+if(MSVC)
+  set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "VCPKG Target Triplet to use")
+endif()
 
+project(CProject)
 set(CMAKE_CXX_STANDARD 14)
 
 if(MSVC)

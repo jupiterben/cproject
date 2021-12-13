@@ -2,7 +2,6 @@
 
 const var var::undefined;
 
-
 var var::operator()(void)
 {
 	if (IFunctorImpl* f = toFunctor())
