@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <functional>
 
 class NumberImpl;
 class IFunctorImpl;
@@ -92,6 +93,7 @@ public:
 	Number() {}
 };
 
+
 class IFunctorImpl : public IImpl
 {
 	var result;
@@ -108,6 +110,55 @@ public:
         return result;
     }
     virtual var eval() = 0;
+};
+
+template<class _Ret, class _Fx, class ..._Types>
+class _Functor
+{
+	typedef tuple<typename decay<_Types>::type...> ArgsType;
+	typedef typename decay<_Fx>::type FxType;
+public:
+	_Functor(_Fx&& _Func, _Types&&... _Args)
+	{
+
+	}
+};
+
+
+template<class _Ret,
+	class _Fx,
+	class... _Types>
+	class _Binder
+	: public _Binder_result_type<_Ret, _Fx>::type
+{	// wrap bound callable object and arguments
+private:
+	typedef make_integer_sequence<size_t, sizeof...(_Types)> _Seq;
+	typedef typename decay<_Fx>::type _First;
+	typedef tuple<typename decay<_Types>::type...> _Second;
+
+	_Compressed_pair<_First, _Second> _Mypair;
+
+public:
+	explicit _Binder(_Fx&& _Func, _Types&&... _Args)
+		: _Mypair(_One_then_variadic_args_t(),
+			_STD forward<_Fx>(_Func), _STD forward<_Types>(_Args)...)
+	{	// construct from forwarded callable object and arguments
+	}
+
+#define _BINDER_OPERATOR(CONST_OPT) \
+	template<class... _Unbound> \
+		auto operator()(_Unbound&&... _Unbargs) CONST_OPT \
+		-> decltype(_Call_binder(_Forced<_Ret>(), _Seq(), \
+			_Mypair._Get_first(), _Mypair._Get_second(), \
+			_STD forward_as_tuple(_STD forward<_Unbound>(_Unbargs)...))) \
+		{	/* invoke bound callable object with bound/unbound arguments */ \
+		return (_Call_binder(_Forced<_Ret>(), _Seq(), \
+			_Mypair._Get_first(), _Mypair._Get_second(), \
+			_STD forward_as_tuple(_STD forward<_Unbound>(_Unbargs)...))); \
+		}
+
+	_CLASS_DEFINE_CONST(_BINDER_OPERATOR)
+#undef _BINDER_OPERATOR
 };
 
 #define functor(fname, fbody)            \
