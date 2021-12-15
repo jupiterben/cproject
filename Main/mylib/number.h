@@ -1,6 +1,7 @@
 #pragma once
 
 #include "impl.h"
+#include "var.h"
 //
 class NumberImpl : public IImpl
 {
