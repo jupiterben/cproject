@@ -7,7 +7,7 @@ if(MSVC)
 endif()
 
 project(CProject)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG   "-Od" )             # 调试包不优化
