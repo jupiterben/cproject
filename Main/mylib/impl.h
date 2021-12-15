@@ -11,4 +11,5 @@ public:
 	virtual NumberImpl *toNumber() { return nullptr; }
 	virtual StringImpl * toString() { return nullptr; }
 	virtual ArrayImpl* toArray() { return nullptr; }
+	static IImpl* cast(IImpl* impl) { return impl; }
 };

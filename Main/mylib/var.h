@@ -5,12 +5,26 @@
 template <typename T>
 class VarT
 {
-protected:
-    typedef std::shared_ptr<T> InternalType;
-    InternalType internalPtr;
-    VarT() {}
-    VarT(InternalType internal) : internalPtr(internal) {}
+public:
+	typedef VarT<T> type;
+    typedef std::shared_ptr<T> InternalPtrType;
+	InternalPtrType internalPtr;
 
+public:
+    VarT() {}
+    VarT(InternalPtrType internal) : internalPtr(internal) {}
+	template<class T2>
+	VarT(const VarT<T2>& other) : internalPtr(other.internalPtr, other.toImpl<T>()) {}
+
+	template <class _TyImpl, class... _Types>
+	inline static type createInternal(_Types &&..._Args)
+	{ // make a shared_ptr
+		return VarT(std::make_shared<_TyImpl>(_Args...));
+	}
+	inline T* getInternalPtr() const{ return internalPtr.get(); }
+	
+	template<class T2>
+	inline T2* toImpl()const { return T2::cast(getInternalPtr()); }
 public:
     inline bool isUndefined() const { return internalPtr.get() == nullptr; }
 };
@@ -22,8 +36,13 @@ public:
 
 public:
     var() {}
-    var(const double& x);
-    var(const InternalType internal) : VarT(internal) {}
+	var(double x) :VarT(createInternal<NumberImpl>(x)) {}
+	var(const type& t) :VarT(t) {}
+	var(std::initializer_list<var> list);
+
+	template<class T>
+	var(const VarT<T>& other) : VarT(other) {}
+
     inline bool operator==(var other) const
     {
         return internalPtr == other.internalPtr;
@@ -33,20 +52,4 @@ public:
     var operator-(var other) const;
     var operator*(var other) const;
     var operator/(var other) const;
-
-    template <class _TyImpl, class... _Types>
-    inline static var createInternal(_Types &&..._Args)
-    { // make a shared_ptr
-        return var(std::make_shared<_TyImpl>(_Args...));
-    }
-
-protected:
-    inline NumberImpl *toNumber() const
-    {
-        return isUndefined() ? nullptr : internalPtr->toNumber();
-    }
-    inline IFunctorImpl *toFunctor() const
-    {
-        return isUndefined() ? nullptr : internalPtr->toFunctor();
-    }
 };

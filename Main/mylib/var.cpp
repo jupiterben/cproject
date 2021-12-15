@@ -1,17 +1,18 @@
 #include "var.h"
 #include "number.h"
 #include "functor.h"
+#include "array.h"
 
 const var var::undefined;
 
-var::var(const double& x) : VarT(createInternal<NumberImpl>(x))
+var::var(std::initializer_list<var> list) : VarT(createInternal<ArrayImpl>(list))
 {
 
 }
 
 var var::operator()(void)
 {
-    if (IFunctorImpl *f = toFunctor())
+    if (auto *f = toImpl<IFunctorImpl>() )
     {
         return (*f)();
     }
@@ -22,8 +23,8 @@ namespace
 {
     var add(var p1, var p2) { return p1() + p2(); }
     var sub(var p1, var p2) { return p1() - p2(); }
-    var multi(var p1, var p2) { return p1() * p2(); }
-    var div(var p1, var p2) { return p1() / p2(); }
+    var multiply(var p1, var p2) { return p1() * p2(); }
+    var divide(var p1, var p2) { return p1() / p2(); }
 }
 
 var var::operator+(var other) const
@@ -31,14 +32,14 @@ var var::operator+(var other) const
     if (isUndefined() || other.isUndefined())
         return undefined;
     // number +
-    NumberImpl *numLeft = toNumber();
-    NumberImpl *numRight = other.toNumber();
+	NumberImpl *numLeft = toImpl<NumberImpl>();
+    NumberImpl *numRight = other.toImpl<NumberImpl>();
     if (numLeft && numRight)
     {
         return (*numLeft) + (*numRight);
     }
     // functor
-    if (toFunctor() || other.toFunctor())
+    if (toImpl<IFunctorImpl>() || other.toImpl<IFunctorImpl>())
     {
         return Functor(add, *this, other);
     }
@@ -50,14 +51,14 @@ var var::operator-(var other) const
     if (isUndefined() || other.isUndefined())
         return undefined;
     // number +
-    NumberImpl *numLeft = toNumber();
-    NumberImpl *numRight = other.toNumber();
+    NumberImpl *numLeft = toImpl<NumberImpl>();
+    NumberImpl *numRight = other.toImpl<NumberImpl>();
     if (numLeft && numRight)
     {
         return (*numLeft) - (*numRight);
     }
     // functor
-    if (toFunctor() || other.toFunctor())
+    if (toImpl<IFunctorImpl>() || other.toImpl<IFunctorImpl>())
     {
         return Functor(sub, *this, other);
     }
@@ -69,16 +70,16 @@ var var::operator*(var other) const
     if (isUndefined() || other.isUndefined())
         return undefined;
     // number +
-    NumberImpl *numLeft = toNumber();
-    NumberImpl *numRight = other.toNumber();
+    NumberImpl *numLeft = toImpl<NumberImpl>();
+    NumberImpl *numRight = other.toImpl<NumberImpl>();
     if (numLeft && numRight)
     {
         return (*numLeft) * (*numRight);
     }
     // functor
-    if (toFunctor() || other.toFunctor())
+	if (toImpl<IFunctorImpl>() || other.toImpl<IFunctorImpl>())
     {
-        return multi(*this, other);
+        return Functor(multiply, *this, other);
     }
     //
     throw undefined;
@@ -88,16 +89,16 @@ var var::operator/(var other) const
     if (isUndefined() || other.isUndefined())
         return undefined;
     // number +
-    NumberImpl *numLeft = toNumber();
-    NumberImpl *numRight = other.toNumber();
+    NumberImpl *numLeft = toImpl<NumberImpl>();
+    NumberImpl *numRight = other.toImpl<NumberImpl>();
     if (numLeft && numRight)
     {
         return (*numLeft) / (*numRight);
     }
     // functor
-    if (toFunctor() || other.toFunctor())
+	if (toImpl<IFunctorImpl>() || other.toImpl<IFunctorImpl>())
     {
-        return div(*this, other);
+        return Functor(divide, *this, other);
     }
     //
     throw undefined;

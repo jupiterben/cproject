@@ -11,6 +11,7 @@ class IFunctorImpl : public IImpl
 
 public:
     virtual IFunctorImpl *toFunctor() { return this; }
+	inline static IFunctorImpl* cast(IImpl* impl) { return impl ? impl->toFunctor() : nullptr; }
     inline var operator()(void)
     {
         if (!isEvaluated)
