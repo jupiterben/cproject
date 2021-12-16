@@ -1,7 +1,7 @@
 #pragma once
-#include <memory>
 #include "impl.h"
 #include <initializer_list>
+#include <memory>
 
 template <class T>
 class VarT
@@ -43,12 +43,9 @@ public:
 
 public:
 	var() {}
-	var(double x) : VarT(createInternal<NumberImpl>(x)) {}
+	var(double x);
 	var(const type &t) : VarT(t) {}
 	var(std::initializer_list<var> list);
-
-	template <class T>
-	var(const VarT<T> &other) : VarT(other) {}
 
 	inline bool operator==(var other) const
 	{

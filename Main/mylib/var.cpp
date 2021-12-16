@@ -10,6 +10,11 @@ var::var(std::initializer_list<var> list) : VarT(createInternal<ArrayImpl>(list)
 
 }
 
+var::var(double x) : VarT(createInternal<NumberImpl>(x))
+{
+
+}
+
 var var::operator()(void)
 {
     if (auto *f = toImpl<IFunctorImpl>() )
