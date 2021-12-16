@@ -26,7 +26,17 @@ var var::operator()(void)
 	return f.isUndefined() ? (*this) : f();
 }
 
-String var::toString()
+String var::toString() const
 {
-	if(isUndefined()) return String::UndefindStr;
+	if (isUndefined())
+		return String::UndefindStr;
+	else
+		return getImpl<IImpl>()->toString();
+}
+
+
+std::wostream& var::toStream(std::wostream& os)const
+{
+	os << toString().cStr();
+	return os;
 }

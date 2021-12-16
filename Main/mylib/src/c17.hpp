@@ -1,4 +1,6 @@
+#pragma once
 #include <type_traits>
+#include <sstream>
 
 namespace c17
 {
@@ -13,5 +15,27 @@ namespace c17
         using Indices = std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>;
         return apply_impl(std::forward<F>(f), std::forward<Tuple>(t), Indices());
     }
-}
 
+    template <class InputVarIt>
+    inline std::wstring join(InputVarIt first, InputVarIt last,
+                      const std::wstring &separator = L", ",
+                      const std::wstring &concluder = L"")
+    {
+        if (first == last)
+        {
+            return concluder;
+        }
+
+        std::wstringstream ss;
+        ss << (*first);
+        ++first;
+        while (first != last)
+        {
+            ss << separator;
+            ss << (*first);
+            ++first;
+        }
+        ss << concluder;
+        return ss.str();
+    }
+}

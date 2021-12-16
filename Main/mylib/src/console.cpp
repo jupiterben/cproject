@@ -6,6 +6,5 @@
 Console console;
 void Console::log(var& v)const
 {
-    String s = v.toString();
-    std::wcout << s.cStr() << std::endl;
+    std::wcout << v << std::endl;
 }

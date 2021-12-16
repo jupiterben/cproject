@@ -11,7 +11,10 @@ public:
 public:
     virtual StrImpl *toStrImpl() { return this; }
     inline static StrImpl *cast(IImpl *impl) { return impl ? impl->toStrImpl() : nullptr; }
-    std::wstring toString() const { return str; }
+    std::wstring toString() const 
+    { 
+        return L"\"" + str + L"\""; 
+    }
 
     inline bool equal(const std::wstring &str) const { return this->str == str; }
     StrImpl(const std::wstring &s) : str(s) {}

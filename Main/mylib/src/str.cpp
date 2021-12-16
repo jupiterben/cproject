@@ -45,16 +45,17 @@ public:
 	{
 		size_t strHash = hash(str);
 		auto &bucket = buckets[strHash];
-		for (auto iter = bucket.begin(); iter != bucket.end(); ++iter)
+		for (auto iter = bucket.begin(); iter != bucket.end();)
 		{
 			if (auto s = (*iter).lock())
 			{
 				if (s->equal(str))
 					return s;
+				++iter;
 			}
 			else
 			{
-				bucket.erase(iter);
+				iter = bucket.erase(iter);
 			}
 		}
 
@@ -106,10 +107,9 @@ String String::operator+(const String &other) const
 	return String(p1->str + p2->str);
 }
 
-
-const std::wstring& String::cStr()const
+const std::wstring &String::cStr() const
 {
-	if(isUndefined())
+	if (isUndefined())
 	{
 		return UndefindStr.cStr();
 	}

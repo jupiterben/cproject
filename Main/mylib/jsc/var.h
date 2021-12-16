@@ -44,5 +44,12 @@ public:
 	}
 	var operator()(void);
 
-	String toString();
+	String toString()const;
+
+	std::wostream& toStream(std::wostream& os)const;
 };
+
+inline std::wostream& operator<<(std::wostream& os, const var& dt)
+{
+    return dt.toStream(os);
+}
