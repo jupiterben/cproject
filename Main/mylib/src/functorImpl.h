@@ -1,8 +1,5 @@
 #pragma once
-#include "impl.h"
-#include "var.h"
-#include "c17.hpp"
-#include <functional>
+#incldue "impl.h"
 
 class IFunctorImpl : public IImpl
 {
@@ -10,9 +7,11 @@ class IFunctorImpl : public IImpl
     bool isEvaluated = false;
 
 public:
-    virtual IFunctorImpl *toFunctor() { return this; }
-	inline static IFunctorImpl* cast(IImpl* impl) { return impl ? impl->toFunctor() : nullptr; }
+    virtual IFunctorImpl *toFunctorImpl() { return this; }
+    inline static IFunctorImpl *cast(IImpl *impl) { return impl ? impl->toFunctorImpl() : nullptr; }
+    std::wstring toString() const { return L""; }
 
+public:
     inline var operator()(void)
     {
         if (!isEvaluated)
@@ -34,8 +33,10 @@ class _FunctorBind : public IFunctorImpl
 
     _First _func;
     _Second _args;
+
 public:
-    _FunctorBind(_Fx &&_Func, _Types &&..._Args) : _func(_Func), _args(std::forward<_Types>(_Args)...)
+    _FunctorBind(_Fx &&_Func, _Types &&..._Args)
+        : _func(_Func), _args(std::forward<_Types>(_Args)...)
     { // construct from forwarded callable object and arguments
     }
     var eval()
@@ -43,9 +44,3 @@ public:
         return c17::apply(_func, _args);
     }
 };
-template <class _Fx, class... _Types>
-inline var Functor(_Fx &&_Func, _Types &&..._Args)
-{
-    typedef _FunctorBind<_Fx, _Types...> FunctorType;
-    return var::createInternal<FunctorType>(_Func, _Args...);
-}

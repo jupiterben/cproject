@@ -1,21 +1,23 @@
 
-#include <var.h>
-#include <functor.h>
-#include <number.h>
-
-var add(var p1, var p2)
-{
-	return p1() + p2();
-}
+#include <jsc/var.h>
+#include <jsc/functor.h>
+#include <jsc/number.h>
+#include <jsc/object.h>
+#include <jsc/str.h>
+#include <jsc/array.h>
 
 int main()
 {
-	var a = 2;
-	var f = a + 2;
-	var fa = Functor(add, a, f) + f + a;
-	for (int i = 1; i < 100; i++) fa = fa / fa;
-	Number n = a;
-	Number result = fa();
-	var alist = { a, f };
+	String s1 = L"hello";
+	var s2 = L"hello world";
+	for (int i = 0; i < 100000; i++)
+	{
+		s1 = s1 + s2;
+	}
+	Object o = 
+	{
+		{s1, s2}
+	};
+	Array a = { 1, o };
 	return 1;
 }

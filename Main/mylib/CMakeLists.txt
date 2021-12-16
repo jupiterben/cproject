@@ -1,13 +1,7 @@
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+file(GLOB_RECURSE SRC_FILES *.h *.cxx *.cpp) 
 
-
-file(GLOB HEADER *.h) 
-file(GLOB SOURCE *.cpp) 
-
-#在IDE工程中将文件进行分组(e.g. Visual Studio)
-source_group("Header" FILES ${HEADER})
-source_group("Source" FILES ${SOURCE})
-
-add_library(mylib ${SOURCE})
+add_library(mylib ${SRC_FILES})
 
 target_include_directories(mylib PRIVATE .)
 
