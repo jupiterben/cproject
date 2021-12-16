@@ -1,5 +1,6 @@
 
 #include "var.h"
+#include "str.h"
 
 class JSON
 {

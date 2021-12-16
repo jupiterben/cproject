@@ -1,34 +1,56 @@
 #include <jsc/str.h>
+#include "strImpl.h"
+
 #include <map>
 #include <list>
 #include <algorithm>
-#include "strImpl.h"
+#include <cstdlib>
+#include <memory>
+#include <string>
+#include <locale.h>
 
-std::wstring str2wstr(const std::string &str)
+std::wstring s2ws(const std::string &str)
 {
-	unsigned len = (unsigned)str.size() * 2 + 10;
-	setlocale(LC_CTYPE, "");
-	wchar_t *p = new wchar_t[len];
-	size_t convertedLen;
-	mbstowcs_s(&convertedLen, p, len - 1, str.c_str(), _TRUNCATE);
-	std::wstring str1(p);
-	delete[] p;
-	return str1;
+	if (str.empty())
+	{
+		return L"";
+	}
+	unsigned len = str.size() + 1;
+	setlocale(LC_CTYPE, "en_US.UTF-8");
+	std::unique_ptr<wchar_t[]> p(new wchar_t[len]);
+	mbstowcs(p.get(), str.c_str(), len);
+	std::wstring w_str(p.get());
+	return w_str;
+}
+
+std::string ws2s(const std::wstring &w_str)
+{
+	if (w_str.empty())
+	{
+		return "";
+	}
+	unsigned len = w_str.size() * 4 + 1;
+	setlocale(LC_CTYPE, "en_US.UTF-8");
+	std::unique_ptr<char[]> p(new char[len]);
+	wcstombs(p.get(), w_str.c_str(), len);
+	std::string str(p.get());
+	return str;
 }
 
 class StringImplPool
 {
 public:
 	std::map<size_t, std::list<StrImpl::WeakPtr>> buckets;
-	StrImpl::SharedPtr GetOrCreate(const std::wstring& str)
+	StrImpl::SharedPtr GetOrCreate(const std::wstring &str)
 	{
 		size_t strHash = hash(str);
-		auto& bucket = buckets[strHash];
+		auto &bucket = buckets[strHash];
 		for (auto iter = bucket.begin(); iter != bucket.end(); ++iter)
 		{
 			if (auto s = (*iter).lock())
 			{
-				if (s->equal(str)) return s;
+				if (s->equal(str))
+					return s;
 			}
 			else
 			{
@@ -40,11 +62,11 @@ public:
 		bucket.push_back(ptr);
 		return ptr;
 	}
-	static size_t hash(const std::wstring& str)
+	static size_t hash(const std::wstring &str)
 	{
 		size_t h = 0;
-		size_t step = str.size() / 9 +1;
-		for (size_t i = 0; i < str.size(); i+=step)
+		size_t step = str.size() / 9 + 1;
+		for (size_t i = 0; i < str.size(); i += step)
 		{
 			h = h ^ str[i];
 		}
@@ -53,23 +75,46 @@ public:
 };
 StringImplPool strPool;
 
-String::String(const std::string& s):var(strPool.GetOrCreate(str2wstr(s)))
+const String String::UndefindStr(L"undefined");
+
+String::String(std::string &&s) : var(strPool.GetOrCreate(s2ws(s)))
 {
 }
 
-String::String(const std::wstring& s):var(strPool.GetOrCreate(s))
+String::String(std::wstring &&s) : var(strPool.GetOrCreate(s))
 {
 }
 
-String::String(const var& a) : var(a, a.getImpl<StrImpl>())
+String::String(const var &a) : var(a, a.getImpl<StrImpl>())
 {
-
 }
 
-String String::operator+(const String& other) const
+String::String(const char s[]) : String(std::string(s))
 {
-	if (isUndefined() || other.isUndefined()) return undefined;
-	StrImpl* p1 = getImpl<StrImpl>();
-	StrImpl* p2 = other.getImpl<StrImpl>();
+}
+
+String::String(const wchar_t s[]) : String(std::wstring(s))
+{
+}
+
+String String::operator+(const String &other) const
+{
+	if (isUndefined() || other.isUndefined())
+		return undefined;
+	StrImpl *p1 = getImpl<StrImpl>();
+	StrImpl *p2 = other.getImpl<StrImpl>();
 	return String(p1->str + p2->str);
+}
+
+
+const std::wstring& String::cStr()const
+{
+	if(isUndefined())
+	{
+		return UndefindStr.cStr();
+	}
+	else
+	{
+		return getImpl<StrImpl>()->str;
+	}
 }

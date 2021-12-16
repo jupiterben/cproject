@@ -15,7 +15,7 @@ public:
         return new ArrayImpl(_Args...);
     }
 
-    std::wstring toString() const { return L""; }
+    std::wstring toString() const { return L"[]"; }
 
 private:
     typedef std::vector<var> InternalType;

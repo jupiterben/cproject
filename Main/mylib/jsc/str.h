@@ -6,8 +6,14 @@
 class String : public var
 {
 public:
-	String(const var& a);
-	String(const std::string& s);
-	String(const std::wstring& s);
-	String operator + (const String& other)const;
+	String(const var &a);
+	String(std::string &&s);
+	String(std::wstring &&s);
+	String(const char[]);
+	String(const wchar_t[]);
+	String operator+(const String &other) const;
+
+	const static String UndefindStr;
+
+	const std::wstring& cStr()const;
 };

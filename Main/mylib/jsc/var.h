@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+class String;
 class var 
 {
 public:
@@ -31,6 +32,8 @@ public:
 	var(double x);
 	var(const std::string& s);
 	var(const std::wstring& s);
+	var(const char []);
+	var(const wchar_t []);
 	
 	template<class T2>
 	var(const var& other, T2* ptr) : internalPtr(other.internalPtr, ptr) {}
@@ -40,4 +43,6 @@ public:
 		return internalPtr == other.internalPtr;
 	}
 	var operator()(void);
+
+	String toString();
 };

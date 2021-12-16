@@ -10,18 +10,23 @@ var::var(double x) : var(Number(x))
 {
 }
 
-var::var(const std::string& s):var(String(s))
+var::var(const std::string &s) : var(String(s))
 {
-
 }
 
-var::var(const std::wstring& s):var(String(s))
+var::var(const std::wstring &s) : var(String(s))
 {
-
 }
+var::var(const char s[]) : var(String(s)) {}
+var::var(const wchar_t s[]) : var(String(s)) {}
 
 var var::operator()(void)
 {
 	Functor f(*this);
 	return f.isUndefined() ? (*this) : f();
+}
+
+String var::toString()
+{
+	if(isUndefined()) return String::UndefindStr;
 }

@@ -1,5 +1,6 @@
 #pragma once
-#incldue "impl.h"
+#include <jsc/impl.h>
+#include "c17.hpp"
 
 class IFunctorImpl : public IImpl
 {

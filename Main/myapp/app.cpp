@@ -5,12 +5,14 @@
 #include <jsc/object.h>
 #include <jsc/str.h>
 #include <jsc/array.h>
+#include <jsc/console.h>
 
 int main()
 {
 	String s1 = L"hello";
+	console.log(s1);
 	var s2 = L"hello world";
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		s1 = s1 + s2;
 	}
@@ -19,5 +21,6 @@ int main()
 		{s1, s2}
 	};
 	Array a = { 1, o };
+	console.log(a);
 	return 1;
 }
