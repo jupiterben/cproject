@@ -1,20 +1,19 @@
 cmake_minimum_required(VERSION 3.13)
-
 ## VCPKG
-if(MSVC)
-  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
-  set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "VCPKG Target Triplet to use")
-endif()
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 
 project(CProject)
 set(CMAKE_CXX_STANDARD 14)
+
+if(MSVC)
+  set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "VCPKG Target Triplet to use")
+endif()
 
 if(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG   "-Od" )             # 调试包不优化
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG " )   # release包优化
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /ZI")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4819")
-  add_definitions(-DNOMINMAX -DUNICODE -D_UNICODE)
 elseif(EMSCRIPTEN)
   set(CMAKE_CXX_FLAGS_DEBUG "-g4")
   set(CMAKE_EXECUTABLE_SUFFIX ".js")
@@ -23,6 +22,7 @@ else()
   set(CMAKE_CXX_FLAGS_DEBUG "-g")
   set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 endif()
+
 
 
 add_subdirectory(main)

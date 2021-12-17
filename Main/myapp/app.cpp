@@ -7,13 +7,14 @@
 #include <jsc/array.h>
 #include <jsc/console.h>
 #include <iostream>
+#include <string>
 
 int main()
 {
 	String s1 = _TS("hello");
 	console.log(s1);
-	std::cout << U"你好";
-	var s2 = _TS("你好");
+	
+	var s2 = _TS("中国");
 	Object o = 
 	{
 		{s1, s2}
