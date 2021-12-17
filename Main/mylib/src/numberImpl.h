@@ -1,6 +1,5 @@
 #pragma once
 #include <jsc/impl.h>
-#include <sstream>
 
 class Number;
 class NumberImpl : public IImpl
@@ -17,11 +16,12 @@ public:
 public:
     virtual NumberImpl *toNumberImpl() { return this; }
     inline static NumberImpl *cast(IImpl *impl) { return impl ? impl->toNumberImpl() : nullptr; }
-    std::wstring toString() const
+    TStr toString() const
     {
-        std::wstringstream ss;
-        ss << x;
-        return ss.str();
+		return _TS("");
+//         TStrStream ss;
+//         ss << x;
+//         return ss.str();
     }
 
 protected:

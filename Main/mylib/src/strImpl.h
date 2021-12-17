@@ -11,14 +11,14 @@ public:
 public:
     virtual StrImpl *toStrImpl() { return this; }
     inline static StrImpl *cast(IImpl *impl) { return impl ? impl->toStrImpl() : nullptr; }
-    std::wstring toString() const 
+	TStr toString() const
     { 
-        return L"\"" + str + L"\""; 
+        return _TS("\"") + str + _TS("\"");
     }
 
-    inline bool equal(const std::wstring &str) const { return this->str == str; }
-    StrImpl(const std::wstring &s) : str(s) {}
+    inline bool equal(const TStr &str) const { return this->str == str; }
+    StrImpl(const TStr &s) : str(s) {}
 
 private:
-    const std::wstring str;
+    const TStr str;
 };

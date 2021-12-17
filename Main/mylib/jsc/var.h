@@ -30,14 +30,10 @@ protected:
 public:
 	var() {}
 	var(double x);
-	var(const std::string& s);
-	var(const std::wstring& s);
-	var(const char []);
-	var(const wchar_t []);
-	
+	var(const TStr& s);
+	var(const var& other) :internalPtr(other.internalPtr) {}
 	template<class T2>
 	var(const var& other, T2* ptr) : internalPtr(other.internalPtr, ptr) {}
-
 	inline bool operator==(var other) const
 	{
 		return internalPtr == other.internalPtr;
@@ -46,10 +42,10 @@ public:
 
 	String toString()const;
 
-	std::wostream& toStream(std::wostream& os)const;
+	TOstream& toStream(TOstream& os)const;
 };
 
-inline std::wostream& operator<<(std::wostream& os, const var& dt)
+inline TOstream& operator<<(TOstream& os, const var& dt)
 {
     return dt.toStream(os);
 }

@@ -23,18 +23,18 @@ public:
 public:
     virtual ObjectImpl *toObjectImpl() { return this; }
     inline static ObjectImpl *cast(IImpl *impl) { return impl ? impl->toObjectImpl() : nullptr; }
-	virtual std::wstring toString() const 
+	virtual TStr toString() const 
 	{ 
-		 std::wstringstream ss;
-		 ss << L"{";
+		 TStrStream ss;
+		 ss << _TS("{");
 		 for(auto itr = internalData.begin(); itr!= internalData.end(); ++itr)
 		 {
 			if(itr != internalData.begin()) ss << ",";
 			const String& key = itr->first;
 			const var& value = itr->second;
-			ss << key << L": " << value;
+			ss << key << _TS(": ") << value;
 		 }
-		 ss << L"}";
+		 ss << _TS("}");
 		 return ss.str();
 	}
 public:

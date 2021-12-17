@@ -13,12 +13,12 @@ public:
     ArrayImpl *toArrayImpl() { return this; }
     inline static ArrayImpl *cast(IImpl *impl) { return impl ? impl->toArrayImpl() : nullptr; }
 
-    std::wstring toString() const 
+	TStr toString() const
     { 
-        return L"[" + join() + L"]"; 
+        return _TS("[") + join() + _TS("]"); 
     }
 
-    std::wstring join(const std::wstring& sep = L", ")const
+	TStr join(const TStr& sep = _TS(", "))const
     {
         return c17::join(internalData.begin(),internalData.end(), sep); 
     }

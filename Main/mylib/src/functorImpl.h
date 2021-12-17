@@ -10,7 +10,7 @@ class IFunctorImpl : public IImpl
 public:
     virtual IFunctorImpl *toFunctorImpl() { return this; }
     inline static IFunctorImpl *cast(IImpl *impl) { return impl ? impl->toFunctorImpl() : nullptr; }
-    std::wstring toString() const { return L""; }
+    TStr toString() const { return _TS(""); }
 
 public:
     inline var operator()(void)

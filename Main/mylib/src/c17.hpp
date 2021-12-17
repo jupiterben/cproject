@@ -1,6 +1,9 @@
 #pragma once
 #include <type_traits>
 #include <sstream>
+#include <string>
+#include <locale>
+#include <codecvt>
 
 namespace c17
 {
@@ -17,16 +20,15 @@ namespace c17
     }
 
     template <class InputVarIt>
-    inline std::wstring join(InputVarIt first, InputVarIt last,
-                      const std::wstring &separator = L", ",
-                      const std::wstring &concluder = L"")
+    inline TStr join(InputVarIt first, InputVarIt last,
+                      const TStr &separator, const TStr &concluder=_TS(""))
     {
         if (first == last)
         {
             return concluder;
         }
 
-        std::wstringstream ss;
+		TStrStream ss;
         ss << (*first);
         ++first;
         while (first != last)
