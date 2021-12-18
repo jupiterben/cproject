@@ -38,6 +38,6 @@ namespace c17
             ++first;
         }
         ss << concluder;
-        return ss.str();
+        return TStr(ss.str().c_str());
     }
 }

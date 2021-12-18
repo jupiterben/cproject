@@ -37,8 +37,8 @@ public:
 	static size_t hash(const TStr &str)
 	{
 		size_t h = 0;
-		size_t step = str.size() / 9 + 1;
-		for (size_t i = 0; i < str.size(); i += step)
+		size_t step = str.length() / 9 + 1;
+		for (size_t i = 0; i < str.length(); i += step)
 		{
 			h = h ^ str[i];
 		}

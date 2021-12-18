@@ -35,7 +35,7 @@ public:
 			ss << key << _TS(": ") << value;
 		 }
 		 ss << _TS("}");
-		 return ss.str();
+		 return TStr(ss.str().c_str());
 	}
 public:
 	ObjectImpl(const InitialMapType& keyValues) : internalData(keyValues.begin(), keyValues.end()){}

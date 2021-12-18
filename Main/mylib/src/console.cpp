@@ -3,6 +3,11 @@
 #include <iostream>
 #include <jsc/str.h>
 #include "c17.hpp"
+#include <unicode/utypes.h>
+#include <unicode/stringpiece.h>
+#include <unicode/utf8.h>
+#include <unicode/uchar.h>
+#include <unicode/ucnv.h>
 
 // https://stackoverflow.com/questions/7232710/convert-between-string-u16string-u32string
 // https://stackoverflow.com/questions/32055357/visual-studio-c-2015-stdcodecvt-with-char16-t-or-char32-t

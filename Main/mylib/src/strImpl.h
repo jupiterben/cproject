@@ -1,9 +1,4 @@
 #pragma once
-#include <unicode/utypes.h>
-#include <unicode/stringpiece.h>
-#include <unicode/utf8.h>
-#include <unicode/uchar.h>
-#include <unicode/ucnv.h>
 
 class StrImpl : public IImpl
 {

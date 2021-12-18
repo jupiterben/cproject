@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 if(MSVC)
   set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "VCPKG Target Triplet to use")
+else()
+  set(VCPKG_TARGET_TRIPLET "x64-osx" CACHE STRING "VCPKG Target Triplet to use")
 endif()
 
 if(MSVC)
