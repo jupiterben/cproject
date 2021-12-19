@@ -18,26 +18,4 @@ namespace c17
         using Indices = std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>;
         return apply_impl(std::forward<F>(f), std::forward<Tuple>(t), Indices());
     }
-
-    template <class InputVarIt>
-    inline TStr join(InputVarIt first, InputVarIt last,
-                      const TStr &separator, const TStr &concluder=_TS(""))
-    {
-        if (first == last)
-        {
-            return concluder;
-        }
-
-		TStrStream ss;
-        ss << (*first);
-        ++first;
-        while (first != last)
-        {
-            ss << separator;
-            ss << (*first);
-            ++first;
-        }
-        ss << concluder;
-        return TStr(ss.str().c_str());
-    }
 }

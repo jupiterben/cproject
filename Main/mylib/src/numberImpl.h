@@ -1,5 +1,8 @@
 #pragma once
 #include <jsc/impl.h>
+#include "strImpl.h"
+#include <sstream>
+#include <jsc/str.h>
 
 class Number;
 class NumberImpl : public IImpl
@@ -14,14 +17,13 @@ public:
     inline operator double() const { return x; }
 
 public:
-    virtual NumberImpl *toNumberImpl() { return this; }
-    inline static NumberImpl *cast(IImpl *impl) { return impl ? impl->toNumberImpl() : nullptr; }
-    TStr toString() const
+    static String typeId;
+
+    String toString() const
     {
-		return _TS("");
-//         TStrStream ss;
-//         ss << x;
-//         return ss.str();
+		std::stringstream ss;
+        ss << x;
+        return String(ss.str());
     }
 
 protected:

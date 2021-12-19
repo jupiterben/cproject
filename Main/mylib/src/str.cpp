@@ -3,15 +3,15 @@
 #include <map>
 #include <list>
 #include <algorithm>
-#include <cstdlib>
-#include <memory>
 #include <string>
-#include <locale.h>
+#include <sstream>
 
+/////
 class StringImplPool
 {
 public:
 	std::map<size_t, std::list<StrImpl::WeakPtr>> buckets;
+
 	StrImpl::SharedPtr GetOrCreate(const TStr &str)
 	{
 		size_t strHash = hash(str);
@@ -47,13 +47,31 @@ public:
 };
 StringImplPool strPool;
 
-const String String::UndefindStr(_TS("undefined"));
+String StrImpl::toString() const
+{
+	StringStream ss;
+	ss << "\"" << str << "\"";
+	return ss.str();
+}
+
+///////
+const String String::UndefinedStr(_A("undefined"));
 
 String::String(const var &a) : var(a, a.getImpl<StrImpl>())
 {
 }
 
-String::String(const TStr& s):var(strPool.GetOrCreate(s))
+String::String(const TStr &s) : var(strPool.GetOrCreate(s))
+{
+}
+
+String::String(const std::string& s) 
+: var(strPool.GetOrCreate(TStr::fromUTF8(s)))
+{
+}
+
+String::String(const std::u32string& s) 
+: var(strPool.GetOrCreate(TStr::from(s)))
 {
 }
 
@@ -66,14 +84,30 @@ String String::operator+(const String &other) const
 	return String(p1->str + p2->str);
 }
 
-const TStr &String::cStr() const
+const TStr& String::str()const
 {
-	if (isUndefined())
+	StrImpl* p = getImpl<StrImpl>();
+	return (p!=nullptr)?p->str:UndefinedStr.str();
+}
+
+////////////
+StringStream& StringStream::operator<<(const String& s)
+{
+	StrImpl* sInternal = s.getImpl<StrImpl>();
+	if(sInternal!=nullptr)
 	{
-		return UndefindStr.cStr();
+		ss << sInternal->str;
 	}
-	else
-	{
-		return getImpl<StrImpl>()->str;
-	}
+	return *this;
+}
+StringStream& StringStream::operator<<(const char s[])
+{
+	ss << s;
+	return *this;
+}
+
+String StringStream::str()const
+{
+	auto tStr = TStr::fromUTF8(icu::StringPiece(ss.str()));
+	return String(tStr);
 }

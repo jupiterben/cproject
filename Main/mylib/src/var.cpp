@@ -4,13 +4,15 @@
 #include <jsc/array.h>
 #include <jsc/str.h>
 
+#include "strImpl.h"
+
 const var var::undefined;
 
 var::var(double x) : var(Number(x))
 {
 }
-
-var::var(const TStr& s):var(String(s)){}
+var::var(const std::string&s ):var(String(s)){}
+var::var(const std::u32string&s ):var(String(s)){}
 
 var var::operator()(void)
 {
@@ -21,13 +23,8 @@ var var::operator()(void)
 String var::toString() const
 {
 	if (isUndefined())
-		return String::UndefindStr;
+		return String::UndefinedStr;
 	else
 		return getImpl<IImpl>()->toString();
 }
 
-TOstream& var::toStream(TOstream& os)const
-{
-	os << toString().cStr();
-	return os;
-}

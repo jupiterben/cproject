@@ -12,6 +12,6 @@ Array::Array(std::initializer_list<var> alist):var(createInternal<ArrayImpl>(ali
 
 String Array::join(String sep)
 {
-    if(isUndefined()) return String::UndefindStr;
-    return getImpl<ArrayImpl>()->join(sep.cStr());
+    if(isUndefined()) return String::UndefinedStr;
+    return getImpl<ArrayImpl>()->join(sep);
 }

@@ -1,7 +1,6 @@
 #include <jsc/impl.h>
 #include <vector>
-#include "c17.hpp"
-#include <string>
+#include <jsc/str.h>
 
 class ArrayImpl : public IImpl
 {
@@ -10,17 +9,17 @@ public:
     ArrayImpl(std::initializer_list<var> alist) : internalData(alist) {}
 
 public:
-    ArrayImpl *toArrayImpl() { return this; }
-    inline static ArrayImpl *cast(IImpl *impl) { return impl ? impl->toArrayImpl() : nullptr; }
-
-	TStr toString() const
+	virtual String toString() const
     { 
-        return _TS("[") + join() + _TS("]"); 
+        StringStream ss;
+        ss << "[" << join() << "]";
+        return ss.str();
     }
 
-	TStr join(const TStr& sep = _TS(", "))const
+	String join(const String& sep = String(", "))const
     {
-        return c17::join(internalData.begin(),internalData.end(), sep); 
+        StringStream ss;
+        return ss.str();
     }
 private:
     typedef std::vector<var> InternalType;

@@ -2,7 +2,7 @@
 #include <jsc/impl.h>
 #include <unordered_map>
 #include <jsc/str.h>
-#include <sstream>
+#include "strImpl.h"
 
 namespace std
 {
@@ -21,21 +21,20 @@ class ObjectImpl : public IImpl
 public:
 	
 public:
-    virtual ObjectImpl *toObjectImpl() { return this; }
-    inline static ObjectImpl *cast(IImpl *impl) { return impl ? impl->toObjectImpl() : nullptr; }
-	virtual TStr toString() const 
+	virtual String toString() const 
 	{ 
-		 TStrStream ss;
-		 ss << _TS("{");
-		 for(auto itr = internalData.begin(); itr!= internalData.end(); ++itr)
-		 {
-			if(itr != internalData.begin()) ss << ",";
-			const String& key = itr->first;
-			const var& value = itr->second;
-			ss << key << _TS(": ") << value;
-		 }
-		 ss << _TS("}");
-		 return TStr(ss.str().c_str());
+		//  TStrStream ss;
+		//  ss << _TS("{");
+		//  for(auto itr = internalData.begin(); itr!= internalData.end(); ++itr)
+		//  {
+		// 	if(itr != internalData.begin()) ss << ",";
+		// 	const String& key = itr->first;
+		// 	const var& value = itr->second;
+		// 	ss << key << _TS(": ") << value;
+		//  }
+		//  ss << _TS("}");
+		//  return TStr(ss.str().c_str());
+		return _A("");
 	}
 public:
 	ObjectImpl(const InitialMapType& keyValues) : internalData(keyValues.begin(), keyValues.end()){}

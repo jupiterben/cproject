@@ -15,7 +15,7 @@ public:
 	inline IImpl *getInternalPtr() const { return internalPtr.get(); }
 
 	template<class T2>
-	inline T2* getImpl() const { return T2::cast(getInternalPtr()); }
+	inline T2* getImpl() const { return dynamic_cast<T2*>(getInternalPtr()); }
 
 	inline bool isUndefined() const { return getInternalPtr() == nullptr; }
 
@@ -30,7 +30,8 @@ protected:
 public:
 	var() {}
 	var(double x);
-	var(const TStr& s);
+	var(const std::string& s);
+	var(const std::u32string& s);
 	var(const var& other) :internalPtr(other.internalPtr) {}
 	template<class T2>
 	var(const var& other, T2* ptr) : internalPtr(other.internalPtr, ptr) {}
@@ -41,11 +42,4 @@ public:
 	var operator()(void);
 
 	String toString()const;
-
-	TOstream& toStream(TOstream& os)const;
 };
-
-inline TOstream& operator<<(TOstream& os, const var& dt)
-{
-    return dt.toStream(os);
-}

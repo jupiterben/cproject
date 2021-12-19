@@ -1,24 +1,33 @@
 #pragma once
+#include <unicode/unistr.h>
+#include <unicode/ustream.h>
+
+typedef icu::UnicodeString ICUStr;
+class TStr : public ICUStr
+{
+public:
+    using UnicodeString::UnicodeString;
+    inline TStr(const ICUStr&s):ICUStr(s){}
+    inline static TStr from(const std::u32string& s)
+    {
+        return fromUTF32((const UChar32*)s.c_str(), s.length());
+    }
+};
+
 
 class StrImpl : public IImpl
 {
     friend class String;
-
+    friend class StringStream;
 public:
     typedef std::shared_ptr<StrImpl> SharedPtr;
     typedef std::weak_ptr<StrImpl> WeakPtr;
 
 public:
-    virtual StrImpl *toStrImpl() { return this; }
-    inline static StrImpl *cast(IImpl *impl) { return impl ? impl->toStrImpl() : nullptr; }
-	TStr toString() const
-    { 
-        return _TS("\"") + str + _TS("\"");
-    }
+	String toString() const;
 
     inline bool equal(const TStr &str) const { return this->str == str; }
     StrImpl(const TStr &s) : str(s) {}
-
-private:
+protected:
     const TStr str;
 };

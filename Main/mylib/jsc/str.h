@@ -1,14 +1,27 @@
 #pragma once
-
-#include <string>
 #include "var.h"
 
+class TStr;
 class String : public var
 {
 public:
 	String(const var &a);
-	String(const TStr& s);
+	String(const std::string& s);
+	String(const std::u32string& s);
 	String operator+(const String &other) const;
-	const static String UndefindStr;
-	const TStr& cStr()const;
+	const static String UndefinedStr;
+public:
+	String(const TStr& s);
+	const TStr& str()const;
+};
+
+#include <sstream>
+class StringStream
+{
+public:
+	StringStream& operator<<(const String& s);
+	StringStream& operator<<(const char[]);
+	String str()const;
+private:
+	std::stringstream ss;
 };

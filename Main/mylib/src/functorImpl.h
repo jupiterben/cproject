@@ -1,6 +1,7 @@
 #pragma once
 #include <jsc/impl.h>
 #include "c17.hpp"
+#include <jsc/str.h>
 
 class IFunctorImpl : public IImpl
 {
@@ -8,9 +9,7 @@ class IFunctorImpl : public IImpl
     bool isEvaluated = false;
 
 public:
-    virtual IFunctorImpl *toFunctorImpl() { return this; }
-    inline static IFunctorImpl *cast(IImpl *impl) { return impl ? impl->toFunctorImpl() : nullptr; }
-    TStr toString() const { return _TS(""); }
+    String toString() const { return String("Functor"); }
 
 public:
     inline var operator()(void)
