@@ -6,7 +6,10 @@
 #include <string>
 #include <sstream>
 
-
+inline TStr TStr::from(const std::u32string &s)
+{
+	return fromUTF32(reinterpret_cast<const UChar32 *>(s.c_str()), s.length());
+}
 /////
 class StringImplPool
 {
@@ -50,14 +53,12 @@ StringImplPool strPool;
 
 String StrImpl::toString() const
 {
-	StringStream ss;
-	ss << "\"" << str << "\"";
-	return ss.str();
+	TStr ret = TStr::from(_U("\""));
+	return ret + str + ret;
 }
 
-///////
-const String String::UndefinedStr(_A("undefined"));
-const String String::EmptyStr(_A(""));
+const String String::UndefinedStr(_U("undefined"));
+const String String::EmptyStr(_U(""));
 
 String::String(const var &a) : var(a, a.getImpl<StrImpl>())
 {
@@ -67,10 +68,10 @@ String::String(const TStr &s) : var(strPool.GetOrCreate(s))
 {
 }
 
-String::String(const std::string& s) 
-: var(strPool.GetOrCreate(TStr::fromUTF8(s)))
-{
-}
+// String::String(const std::string& s) 
+// : var(strPool.GetOrCreate(TStr::fromUTF8(s)))
+// {
+// }
 
 String::String(const std::u32string& s) 
 : var(strPool.GetOrCreate(TStr::from(s)))
@@ -102,11 +103,11 @@ StringStream& StringStream::operator<<(const String& s)
 	}
 	return *this;
 }
-StringStream& StringStream::operator<<(const char s[])
-{
-	ss << s;
-	return *this;
-}
+// StringStream& StringStream::operator<<(const char32_t s[])
+// {
+// 	ss << s;
+// 	return *this;
+// }
 
 String StringStream::str()const
 {

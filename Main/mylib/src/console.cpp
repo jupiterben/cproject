@@ -4,9 +4,22 @@
 #include <jsc/str.h>
 #include "strImpl.h"
 
-Console console;
-void Console::log(var& v)const
+#ifdef _WINDOWS
+#include <windows.h>
+void Console::log(const TStr& s)const
 {
-    String s = v.toString();
-    std::cout << s.str() << std::endl;
+	SetConsoleOutputCP(CP_UTF8);
+	std::cout << s << std::endl;
+}
+#else
+void Console::log(const TStr &s) const
+{
+	std::cout << s << std::endl;
+}
+#endif 
+
+Console console;
+void Console::log(const var &v) const
+{
+	log(v.toString().str());
 }

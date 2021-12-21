@@ -25,16 +25,16 @@ public:
 	virtual String toString() const
 	{
 		StringStream ss;
-		ss << "{";
+		ss << _U("{");
 		for (auto itr = internalData.begin(); itr != internalData.end(); ++itr)
 		{
 			if (itr != internalData.begin())
-				ss << ",";
+				ss << _U(",");
 			const String &key = itr->first;
 			const var &value = itr->second;
-			ss << key.toString() << ": " << value.toString();
+			ss << key.toString() << _U(": ") << value.toString();
 		}
-		ss << "}";
+		ss << _U("}");
 		return ss.str();
 	}
 

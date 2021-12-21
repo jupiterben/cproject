@@ -7,12 +7,9 @@ typedef icu::UnicodeString ICUStr;
 class TStr : public ICUStr
 {
 public:
-    using UnicodeString::UnicodeString;
-    inline TStr(const ICUStr&s):ICUStr(s){}
-    inline static TStr from(const std::u32string& s)
-    {
-        return fromUTF32((const UChar32*)s.c_str(), s.length());
-    }
+	using UnicodeString::UnicodeString;
+	inline TStr(const ICUStr&s) :ICUStr(s) {}
+	static TStr from(const std::u32string& s);
 };
 
 
@@ -27,7 +24,7 @@ public:
 public:
 	String toString() const;
 
-    inline bool equal(const TStr &str) const { return this->str == str; }
+    inline bool equal(const TStr &str) const { return (this->str == str)!=UBool(0); }
     StrImpl(const TStr &s) : str(s) {}
 protected:
     const TStr str;

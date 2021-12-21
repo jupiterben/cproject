@@ -12,11 +12,11 @@ public:
 	virtual String toString() const
     { 
         StringStream ss;
-        ss << "[" << join() << "]";
+        ss << _U("[") << join() << _U("]");
         return ss.str();
     }
 
-	String join(const String& sep = String(", "))const
+	String join(const String& sep = String(_U(", ")))const
     {
         if(internalData.empty()) return String::EmptyStr;
         StringStream ss;
