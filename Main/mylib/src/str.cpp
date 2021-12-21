@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 
+
 /////
 class StringImplPool
 {
@@ -56,6 +57,7 @@ String StrImpl::toString() const
 
 ///////
 const String String::UndefinedStr(_A("undefined"));
+const String String::EmptyStr(_A(""));
 
 String::String(const var &a) : var(a, a.getImpl<StrImpl>())
 {

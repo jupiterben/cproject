@@ -1,4 +1,5 @@
 #pragma once
+#include <jsc/impl.h>
 #include <unicode/unistr.h>
 #include <unicode/ustream.h>
 

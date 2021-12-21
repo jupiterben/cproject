@@ -10,10 +10,15 @@ public:
 	String(const std::u32string& s);
 	String operator+(const String &other) const;
 	const static String UndefinedStr;
+	const static String EmptyStr;
 public:
 	String(const TStr& s);
 	const TStr& str()const;
 };
+inline std::ostream& operator << (std::ostream& os, const String& s)
+{
+	os << s.str(); return os;
+}
 
 #include <sstream>
 class StringStream

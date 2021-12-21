@@ -18,7 +18,13 @@ public:
 
 	String join(const String& sep = String(", "))const
     {
+        if(internalData.empty()) return String::EmptyStr;
         StringStream ss;
+        for(auto itr = internalData.begin();itr!=internalData.end();++itr)
+        {
+            if(itr!=internalData.begin()) ss << sep;
+            ss << itr->toString();
+        }
         return ss.str();
     }
 private:

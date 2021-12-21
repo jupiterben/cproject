@@ -1,7 +1,7 @@
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 file(GLOB_RECURSE SRC_FILES *.h *.cxx *.cpp) 
 
-find_package(ICU REQUIRED COMPONENTS uc data)
+find_package(ICU REQUIRED COMPONENTS uc data i18n io)
 
 add_library(mylib SHARED ${SRC_FILES})
 

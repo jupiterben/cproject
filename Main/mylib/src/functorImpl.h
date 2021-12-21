@@ -9,7 +9,7 @@ class IFunctorImpl : public IImpl
     bool isEvaluated = false;
 
 public:
-    String toString() const { return String("Functor"); }
+    virtual String toString() const { return String("Functor"); }
 
 public:
     inline var operator()(void)
