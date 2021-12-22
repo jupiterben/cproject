@@ -11,9 +11,14 @@ public:
 	inline TStr(const ICUStr&s) :ICUStr(s) {}
 	static TStr from(const std::u32string& s);
 };
+class StringStreamImpl : public IImpl
+{
+public:
+    StringStreamImpl &operator<<(const TStr &s);
+    TStr str() const;
+};
 
-
-class StrImpl : public IImpl
+class StrImpl : public IValue
 {
     friend class String;
     friend class StringStream;

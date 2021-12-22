@@ -18,7 +18,8 @@ namespace std
 		}
 	};
 }
-class ObjectImpl : public IImpl
+
+class ObjectImpl : public IValue
 {
 public:
 public:

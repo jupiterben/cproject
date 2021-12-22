@@ -5,7 +5,7 @@
 #include <jsc/str.h>
 
 class Number;
-class NumberImpl : public IImpl
+class NumberImpl : public IValue
 {
     friend class Number;
 
@@ -17,8 +17,6 @@ public:
     inline operator double() const { return x; }
 
 public:
-    static String typeId;
-
     String toString() const
     {
 		std::stringstream ss;

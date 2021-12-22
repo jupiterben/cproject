@@ -25,6 +25,6 @@ String var::toString() const
 	if (isUndefined())
 		return String::UndefinedStr;
 	else
-		return getImpl<IImpl>()->toString();
+		return getImpl<IValue>()->toString();
 }
 

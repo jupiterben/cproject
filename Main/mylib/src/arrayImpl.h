@@ -1,22 +1,22 @@
 #include <jsc/impl.h>
 #include <vector>
-#include <jsc/str.h>
+#include "strImpl.h"
 
-class ArrayImpl : public IImpl
+class ArrayImpl : public IValue
 {
     friend class Array;
 public:
     ArrayImpl(std::initializer_list<var> alist) : internalData(alist) {}
 
 public:
-	virtual String toString() const
+	virtual String toString() const override
     { 
         StringStream ss;
         ss << _U("[") << join() << _U("]");
         return ss.str();
     }
 
-	String join(const String& sep = String(_U(", ")))const
+    String join(const String &sep = String(_U(", "))) const
     {
         if(internalData.empty()) return String::EmptyStr;
         StringStream ss;

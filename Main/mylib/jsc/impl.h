@@ -1,18 +1,14 @@
 #pragma once
-#include <string>
-class NumberImpl;
-class IFunctorImpl;
-class StrImpl;
-class ArrayImpl;
-class ObjectImpl;
-#define _U(x) std::u32string(U##x)
-#define _A(x) std::string(x)
-
 class String;
 class IImpl
 {
 public:
-	//
-	virtual String toString() const = 0;
 	//virtual size_t hashCode() const = 0;
+	virtual ~IImpl() {}
+};
+
+class IValue : public IImpl
+{
+public:
+	virtual String toString() const = 0;
 };

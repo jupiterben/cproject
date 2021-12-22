@@ -8,7 +8,7 @@
 
 inline TStr TStr::from(const std::u32string &s)
 {
-	return fromUTF32(reinterpret_cast<const UChar32 *>(s.c_str()), s.length());
+	return fromUTF32((const UChar32 *)s.c_str(), s.length());
 }
 /////
 class StringImplPool
@@ -44,7 +44,7 @@ public:
 		size_t step = str.length() / 9 + 1;
 		for (size_t i = 0; i < str.length(); i += step)
 		{
-			h = h ^ str[i];
+			h = h ^ (size_t)(str[i]);
 		}
 		return h;
 	}
@@ -93,24 +93,3 @@ const TStr& String::str()const
 	return (p!=nullptr)?p->str:UndefinedStr.str();
 }
 
-////////////
-StringStream& StringStream::operator<<(const String& s)
-{
-	StrImpl* sInternal = s.getImpl<StrImpl>();
-	if(sInternal!=nullptr)
-	{
-		ss << sInternal->str;
-	}
-	return *this;
-}
-// StringStream& StringStream::operator<<(const char32_t s[])
-// {
-// 	ss << s;
-// 	return *this;
-// }
-
-String StringStream::str()const
-{
-	auto tStr = TStr::fromUTF8(icu::StringPiece(ss.str()));
-	return String(tStr);
-}
