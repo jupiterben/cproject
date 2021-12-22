@@ -11,7 +11,7 @@ const var var::undefined;
 var::var(double x) : var(Number(x))
 {
 }
-var::var(const std::string&s ):var(String(s)){}
+//var::var(const std::string&s ):var(String(s)){}
 var::var(const std::u32string&s ):var(String(s)){}
 
 var var::operator()(void)

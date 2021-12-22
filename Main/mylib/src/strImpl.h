@@ -11,11 +11,20 @@ public:
 	inline TStr(const ICUStr&s) :ICUStr(s) {}
 	static TStr from(const std::u32string& s);
 };
+
 class StringStreamImpl : public IImpl
 {
 public:
-    StringStreamImpl &operator<<(const TStr &s);
-    TStr str() const;
+    StringStreamImpl &operator<<(const TStr &s)
+    {
+        buffer += s;
+        return *this;
+    }
+    TStr str() const { return buffer; }
+    inline void Clear() { buffer = TStr(); }
+
+protected:
+    TStr buffer;
 };
 
 class StrImpl : public IValue

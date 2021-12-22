@@ -30,7 +30,7 @@ protected:
 public:
 	var() {}
 	var(double x);
-	var(const std::string& s);
+	//var(const std::string& s);
 	var(const std::u32string& s);
 	var(const var& other) :internalPtr(other.internalPtr) {}
 	template<class T2>
