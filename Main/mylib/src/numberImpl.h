@@ -8,11 +8,9 @@ class Number;
 class NumberImpl : public TValueImpl<double, std::hash<double>, std::equal_to<double>>
 {
     friend class Number;
+    using TValueImpl::TValueImpl;
 public:
     inline operator double() const { return internalData; }
-	NumberImpl(double x) :TValueImpl(x) {}
-
-
 public:
     String toString() const
     {

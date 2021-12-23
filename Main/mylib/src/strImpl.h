@@ -50,5 +50,5 @@ class StrImpl : public TValueImpl<TStr, TStrHash, TStrEqual>
 
 public:
     String toString() const;
-    StrImpl(const TStr &s) : TValueImpl(s) {}
+    StrImpl(const TStr &s, size_t hash) : TValueImpl(s, hash) {}
 };

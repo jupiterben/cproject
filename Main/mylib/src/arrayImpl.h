@@ -21,8 +21,7 @@ class ArrayImpl : public TValueImpl<VarArray, VarArrayHash, std::equal_to<VarArr
 {
     friend class Array;
 public:
-    ArrayImpl(std::initializer_list<var> alist) : TValueImpl(alist) {}
-    ArrayImpl(const InternalType &d) : TValueImpl(d) {}
+    using TValueImpl::TValueImpl;
 public:
 	virtual String toString() const override
     { 

@@ -28,7 +28,7 @@ public:
 				iter = bucket.erase(iter);
 			}
 		}
-		auto ptr = std::make_shared<ValueType>(internalData);
+		auto ptr = std::make_shared<ValueType>(internalData, hash);
 		bucket.push_back(ptr);
 		return ptr;
 	}

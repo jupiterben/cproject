@@ -29,6 +29,7 @@ struct ObjectInternalHash
 class ObjectImpl : public TValueImpl<ObjectInternalType, ObjectInternalHash, std::equal_to<ObjectInternalType>>
 {
 public:
+	using TValueImpl::TValueImpl;
 	virtual String toString() const
 	{
 		StringStream ss;
@@ -45,6 +46,4 @@ public:
 		return ss.str();
 	}
 public:
-	ObjectImpl(const InitialMapType &keyValues) : TValueImpl(InternalType(keyValues.begin(), keyValues.end())) {}
-	ObjectImpl(InitialListType initial_list) : TValueImpl(InternalType(initial_list)) {}
 };

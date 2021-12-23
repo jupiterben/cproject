@@ -14,9 +14,8 @@ public:
 	virtual size_t getHash() const = 0;
 };
 
-
 //////////////////////////////////////////////////////////////////////////
-template<class IT, class _HashFunc, class _EqualFunc>
+template <class IT, class _HashFunc, class _EqualFunc>
 class TValueImpl : public IValueImpl
 {
 public:
@@ -24,12 +23,18 @@ public:
 	typedef _HashFunc HashFunc;
 	typedef _EqualFunc EqualFunc;
 
-	TValueImpl(const InternalType& d) : internalData(d) {}
-	const IT& internal()const { return internalData; }
-	virtual size_t getHash() const { return GetDataHash(internalData); }
-	virtual bool equalTo(const InternalType& d) const { return EqualFunc()(internalData, d); }
+	TValueImpl(const InternalType &d, size_t hash)
+		: internalData(d), _hash(hash) {}
+	const IT &internal() const { return internalData; }
+	virtual size_t getHash() const { return _hash; }
+	virtual bool equalTo(const InternalType &d) const
+	{
+		return EqualFunc()(internalData, d);
+	}
 
 	inline static size_t GetDataHash(const InternalType &d) { return HashFunc()(d); }
+
 protected:
 	const IT internalData;
+	size_t _hash;
 };
