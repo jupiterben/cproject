@@ -13,20 +13,21 @@ struct std::hash<String>
 	}
 };
 typedef std::unordered_map<String, var> ObjectInternalType;
-
-struct ObjectInternalHash
+template <>
+struct std::hash<ObjectInternalType>
 {
 	std::size_t operator()(const ObjectInternalType &data) const noexcept
 	{
+		size_t h = 0;
 		for (auto itr = data.begin(); itr != data.end(); ++itr)
 		{
-
+			h = h ^ (size_t)(itr->first.getHash());
 		}
-		return 0;
+		return h;
 	}
 };
 
-class ObjectImpl : public TValueImpl<ObjectInternalType, ObjectInternalHash, std::equal_to<ObjectInternalType>>
+class ObjectImpl : public TValueImpl<ObjectInternalType>
 {
 public:
 	using TValueImpl::TValueImpl;

@@ -3,7 +3,8 @@
 #include "strImpl.h"
 
 typedef std::vector<var> VarArray;
-struct VarArrayHash
+template<>
+struct std::hash<VarArray>
 {
     std::size_t operator()(const VarArray &d) const noexcept
     {
@@ -17,7 +18,7 @@ struct VarArrayHash
     }
 };
 
-class ArrayImpl : public TValueImpl<VarArray, VarArrayHash, std::equal_to<VarArray> >
+class ArrayImpl : public TValueImpl<VarArray>
 {
     friend class Array;
 public:

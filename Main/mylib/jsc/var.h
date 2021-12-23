@@ -33,6 +33,7 @@ public:
 	var(const std::string& s);
 	var(const std::u32string& s);
 	var(const var& other) :internalPtr(other.internalPtr) {}
+	
 	template<class T2>
 	var(const var& other, T2* ptr) : internalPtr(other.internalPtr, ptr) {}
 

@@ -5,7 +5,7 @@
 #include <jsc/str.h>
 
 class Number;
-class NumberImpl : public TValueImpl<double, std::hash<double>, std::equal_to<double>>
+class NumberImpl : public TValueImpl<double>
 {
     friend class Number;
     using TValueImpl::TValueImpl;

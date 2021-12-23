@@ -29,14 +29,16 @@ protected:
     TStr buffer;
 };
 
-struct TStrHash
+template<>
+struct std::hash<TStr>
 {
 	std::size_t operator()(const TStr &str) const noexcept
 	{
 		return str.hashCode();
 	}
 };
-struct TStrEqual
+template <>
+struct std::equal_to<TStr>
 {
 	bool operator()(const TStr& s1, const TStr& s2)const noexcept
 	{
@@ -44,7 +46,7 @@ struct TStrEqual
 	}
 };
 
-class StrImpl : public TValueImpl<TStr, TStrHash, TStrEqual>
+class StrImpl : public TValueImpl<TStr>
 {
     friend class String;
 

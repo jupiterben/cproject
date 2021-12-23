@@ -15,26 +15,21 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-template <class IT, class _HashFunc, class _EqualFunc>
+template <class IType>
 class TValueImpl : public IValueImpl
 {
 public:
-	typedef IT InternalType;
-	typedef _HashFunc HashFunc;
-	typedef _EqualFunc EqualFunc;
+	typedef IType InternalType;
 
 	TValueImpl(const InternalType &d, size_t hash)
 		: internalData(d), _hash(hash) {}
-	const IT &internal() const { return internalData; }
+	inline const InternalType &internal() const { return internalData; }
 	virtual size_t getHash() const { return _hash; }
 	virtual bool equalTo(const InternalType &d) const
 	{
-		return EqualFunc()(internalData, d);
+		return std::equal_to<InternalType>{}(internalData, d);
 	}
-
-	inline static size_t GetDataHash(const InternalType &d) { return HashFunc()(d); }
-
 protected:
-	const IT internalData;
+	const InternalType internalData;
 	size_t _hash;
 };

@@ -7,13 +7,6 @@ class IFunctorImpl : public IImpl
 {
     var result;
     bool isEvaluated = false;
-
-public:
-    virtual String toString() const { return String(_U("Functor")); }
-    virtual size_t getHash()const
-    {
-        return 0;
-    }
 public:
     inline var operator()(void)
     {
@@ -28,22 +21,23 @@ public:
 };
 
 // usage: var myFunction(var arg1, var arg2, ...){ ... }  Functor f(myFunction, a1, a2);
-template <class _Fx, class... _Types>
-class _FunctorBind : public IFunctorImpl
+template<class _Fx, class... _Types> 
+struct _FnInternalType
 {
     typedef typename std::decay<_Fx>::type _First;
     typedef std::tuple<typename std::decay<_Types>::type...> _Second;
+    typedef std::pair<_First, _Second> Type;
+    Type data;
+};
 
-    _First _func;
-    _Second _args;
-
+template <class _Fx, class... _Types>
+class _FunctorBind : public IFunctorImpl
+, public TValueImpl<typename _FnInternalType<_Fx, typename _Types...>::Type>
+{
 public:
-    _FunctorBind(_Fx &&_Func, _Types &&..._Args)
-        : _func(_Func), _args(std::forward<_Types>(_Args)...)
-    { // construct from forwarded callable object and arguments
-    }
+    using TValueImpl::TValueImpl;
     var eval()
     {
-        return c17::apply(_func, _args);
+        return c17::apply(internalData.first, internalData.second);
     }
 };
