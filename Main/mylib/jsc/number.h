@@ -1,6 +1,5 @@
 #pragma once
 
-#include "impl.h"
 #include "var.h"
 //
 class Number : public var

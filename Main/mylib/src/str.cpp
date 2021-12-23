@@ -1,19 +1,18 @@
 #include <jsc/str.h>
 #include "strImpl.h"
-#include "implPool.h"
+#include "valueImplPool.h"
 
 inline TStr TStr::from(const std::u32string &s)
 {
 	return fromUTF32((const UChar32 *)s.c_str(), s.length());
 }
 
-typedef ImplPool<StrImpl> StringImplPool;
-StringImplPool strPool;
+TValueImplPool<StrImpl> StrImplPool;
 
 String StrImpl::toString() const
 {
 	StringStream ss;
-	ss << _U("\"") << str << _U("\"");
+	ss << _U("\"") << internalData << _U("\"");
 	return ss.str();
 }
 
@@ -24,7 +23,7 @@ String::String(const var &a) : var(a, a.getImpl<StrImpl>())
 {
 }
 
-String::String(const TStr &s) : var(strPool.GetOrCreate(s))
+String::String(const TStr &s) : var(StrImplPool.GetOrCreate(s))
 {
 }
 
@@ -34,7 +33,7 @@ String::String(const std::string& s)
 }
 
 String::String(const std::u32string &s)
-	: var(strPool.GetOrCreate(TStr::from(s)))
+	: var(StrImplPool.GetOrCreate(TStr::from(s)))
 {
 }
 
@@ -44,13 +43,13 @@ String String::operator+(const String &other) const
 		return undefined;
 	StrImpl *p1 = getImpl<StrImpl>();
 	StrImpl *p2 = other.getImpl<StrImpl>();
-	return String(p1->str + p2->str);
+	return String(p1->internalData + p2->internalData);
 }
 
 const TStr &String::str() const
 {
 	StrImpl *p = getImpl<StrImpl>();
-	return (p != nullptr) ? p->str : UndefinedStr.str();
+	return (p != nullptr) ? p->internalData : UndefinedStr.str();
 }
 
 ///

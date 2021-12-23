@@ -4,25 +4,31 @@
 #include <jsc/str.h>
 #include "strImpl.h"
 
-namespace std
+template <>
+struct std::hash<String>
 {
-	template <>
-	struct hash<String>
+	std::size_t operator()(const String &str) const noexcept
 	{
-		std::size_t operator()(const String &p) const
-		{
-			using std::hash;
-			using std::size_t;
-			using std::string;
-			return (std::size_t)p.getInternalPtr();
-		}
-	};
-}
+		return str.getHash();
+	}
+};
+typedef std::unordered_map<String, var> ObjectInternalType;
 
-class ObjectImpl : public IValue
+struct ObjectInternalHash
+{
+	std::size_t operator()(const ObjectInternalType &data) const noexcept
+	{
+		for (auto itr = data.begin(); itr != data.end(); ++itr)
+		{
+
+		}
+		return 0;
+	}
+};
+
+class ObjectImpl : public TValueImpl<ObjectInternalType, ObjectInternalHash, std::equal_to<ObjectInternalType>>
 {
 public:
-	typedef std::unordered_map<String, var> InternalType;
 	virtual String toString() const
 	{
 		StringStream ss;
@@ -38,14 +44,7 @@ public:
 		ss << _U("}");
 		return ss.str();
 	}
-	virtual size_t getHash()const
-    {
-        return 0;
-    }
 public:
-	ObjectImpl(const InitialMapType &keyValues) : internalData(keyValues.begin(), keyValues.end()) {}
-	ObjectImpl(InitialListType initial_list) : internalData(initial_list) {}
-
-protected:
-	const InternalType internalData;
+	ObjectImpl(const InitialMapType &keyValues) : TValueImpl(InternalType(keyValues.begin(), keyValues.end())) {}
+	ObjectImpl(InitialListType initial_list) : TValueImpl(InternalType(initial_list)) {}
 };

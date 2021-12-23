@@ -7,51 +7,48 @@ typedef icu::UnicodeString ICUStr;
 class TStr : public ICUStr
 {
 public:
-	using UnicodeString::UnicodeString;
-	inline TStr(const ICUStr&s) :ICUStr(s) {}
-	static TStr from(const std::u32string& s);
+    using UnicodeString::UnicodeString;
+    inline TStr(const ICUStr &s) : ICUStr(s) {}
+    static TStr from(const std::u32string &s);
 };
+
 
 class StringStreamImpl : public IImpl
 {
 public:
+	StringStreamImpl():buffer(nullptr, 50) {}
     StringStreamImpl &operator<<(const TStr &s)
     {
         buffer.append(s);
         return *this;
     }
     TStr str() const { return buffer; }
-    inline void Clear() { buffer = TStr(); }
+    inline void Clear() { buffer = TStr(nullptr, 50); }
+
 protected:
     TStr buffer;
 };
 
-class StrImpl : public IValue
+struct TStrHash
+{
+	std::size_t operator()(const TStr &str) const noexcept
+	{
+		return str.hashCode();
+	}
+};
+struct TStrEqual
+{
+	bool operator()(const TStr& s1, const TStr& s2)const noexcept
+	{
+		return (s1 == s2) != UBool(0);
+	}
+};
+
+class StrImpl : public TValueImpl<TStr, TStrHash, TStrEqual>
 {
     friend class String;
-    friend class StringStream;
-public:
-    typedef TStr InternalType;
-public:
-	String toString() const;
 
-    static size_t hashCode(const TStr& str)
-    {
-        size_t h = 0;
-		size_t step = str.length() / 9 + 1;
-		for (size_t i = 0; i < str.length(); i += step)
-		{
-			h = h ^ (size_t)(str[i]);
-		}
-		return h;
-    }
-    virtual size_t getHash()const
-    {
-        return hashCode(str);
-    }
-
-    inline bool equal(const TStr &str) const { return (this->str == str)!=UBool(0); }
-    StrImpl(const TStr &s) : str(s) {}
-protected:
-    const TStr str;
+public:
+    String toString() const;
+    StrImpl(const TStr &s) : TValueImpl(s) {}
 };

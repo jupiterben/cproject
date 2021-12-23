@@ -5,31 +5,21 @@
 #include <jsc/str.h>
 
 class Number;
-class NumberImpl : public IValue
+class NumberImpl : public TValueImpl<double, std::hash<double>, std::equal_to<double>>
 {
     friend class Number;
 public:
-    typedef double InternalType;
-private:
-    const InternalType x;
+    inline operator double() const { return internalData; }
+	NumberImpl(double x) :TValueImpl(x) {}
 
-public:
-    inline NumberImpl(double _x) : x(_x) {}
-    inline operator double() const { return x; }
 
 public:
     String toString() const
     {
 		std::stringstream ss;
-        ss << x;
+        ss << internalData;
         return String(ss.str());
     }
-
-    size_t getHash()const
-    {
-        return (size_t)(x);
-    }
-
 protected:
     Number operator+(const NumberImpl &other) const;
     Number operator-(const NumberImpl &other) const;

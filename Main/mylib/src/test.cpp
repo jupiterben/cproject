@@ -10,6 +10,11 @@ void UTest1()
 	Object o = {
 		{s1, s2}
 	};
-	Array a = {1, o, s1, o, s1, o, s1};
-	console.log(a);
+	Array a = {1, o, s1};
+	Array b = { 1, o, s1 };
+	if (a == b)
+	{
+		console.log(a);
+	}
+	
 }
