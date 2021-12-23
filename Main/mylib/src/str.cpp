@@ -1,53 +1,13 @@
 #include <jsc/str.h>
 #include "strImpl.h"
-#include <map>
-#include <list>
-#include <algorithm>
-#include <string>
+#include "implPool.h"
 
 inline TStr TStr::from(const std::u32string &s)
 {
 	return fromUTF32((const UChar32 *)s.c_str(), s.length());
 }
-/////
-class StringImplPool
-{
-public:
-	std::map<size_t, std::list<StrImpl::WeakPtr>> buckets;
 
-	StrImpl::SharedPtr GetOrCreate(const TStr &str)
-	{
-		size_t strHash = hash(str);
-		auto &bucket = buckets[strHash];
-		for (auto iter = bucket.begin(); iter != bucket.end();)
-		{
-			if (auto s = (*iter).lock())
-			{
-				if (s->equal(str))
-					return s;
-				++iter;
-			}
-			else
-			{
-				iter = bucket.erase(iter);
-			}
-		}
-
-		auto ptr = std::make_shared<StrImpl>(str);
-		bucket.push_back(ptr);
-		return ptr;
-	}
-	static size_t hash(const TStr &str)
-	{
-		size_t h = 0;
-		size_t step = str.length() / 9 + 1;
-		for (size_t i = 0; i < str.length(); i += step)
-		{
-			h = h ^ (size_t)(str[i]);
-		}
-		return h;
-	}
-};
+typedef ImplPool<StrImpl> StringImplPool;
 StringImplPool strPool;
 
 String StrImpl::toString() const

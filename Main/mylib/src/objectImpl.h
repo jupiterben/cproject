@@ -22,7 +22,7 @@ namespace std
 class ObjectImpl : public IValue
 {
 public:
-public:
+	typedef std::unordered_map<String, var> InternalType;
 	virtual String toString() const
 	{
 		StringStream ss;
@@ -38,12 +38,14 @@ public:
 		ss << _U("}");
 		return ss.str();
 	}
-
+	virtual size_t getHash()const
+    {
+        return 0;
+    }
 public:
 	ObjectImpl(const InitialMapType &keyValues) : internalData(keyValues.begin(), keyValues.end()) {}
 	ObjectImpl(InitialListType initial_list) : internalData(initial_list) {}
 
 protected:
-	typedef std::unordered_map<String, var> InternalType;
 	const InternalType internalData;
 };

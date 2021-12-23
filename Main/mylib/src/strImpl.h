@@ -17,12 +17,11 @@ class StringStreamImpl : public IImpl
 public:
     StringStreamImpl &operator<<(const TStr &s)
     {
-        buffer += s;
+        buffer.append(s);
         return *this;
     }
     TStr str() const { return buffer; }
     inline void Clear() { buffer = TStr(); }
-
 protected:
     TStr buffer;
 };
@@ -32,11 +31,24 @@ class StrImpl : public IValue
     friend class String;
     friend class StringStream;
 public:
-    typedef std::shared_ptr<StrImpl> SharedPtr;
-    typedef std::weak_ptr<StrImpl> WeakPtr;
-
+    typedef TStr InternalType;
 public:
 	String toString() const;
+
+    static size_t hashCode(const TStr& str)
+    {
+        size_t h = 0;
+		size_t step = str.length() / 9 + 1;
+		for (size_t i = 0; i < str.length(); i += step)
+		{
+			h = h ^ (size_t)(str[i]);
+		}
+		return h;
+    }
+    virtual size_t getHash()const
+    {
+        return hashCode(str);
+    }
 
     inline bool equal(const TStr &str) const { return (this->str == str)!=UBool(0); }
     StrImpl(const TStr &s) : str(s) {}

@@ -1,12 +1,15 @@
 #include <jsc/array.h>
 #include "arrayImpl.h"
-#include "c17.hpp"
+#include "implPool.h"
 //////////////////////////////////////////////////////////////////////////
+ImplPool<ArrayImpl> ArrayImplPool;
+
 Array::Array(const var& other) :var(other, other.getImpl<ArrayImpl>())
 {
 
 }
-Array::Array(std::initializer_list<var> alist):var(createInternal<ArrayImpl>(alist))
+Array::Array(std::initializer_list<var> alist)
+:var(ArrayImplPool.GetOrCreate(ArrayImpl::InternalType(alist)))
 {
 }
 

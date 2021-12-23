@@ -8,9 +8,10 @@ class Number;
 class NumberImpl : public IValue
 {
     friend class Number;
-
+public:
+    typedef double InternalType;
 private:
-    const double x;
+    const InternalType x;
 
 public:
     inline NumberImpl(double _x) : x(_x) {}
@@ -22,6 +23,11 @@ public:
 		std::stringstream ss;
         ss << x;
         return String(ss.str());
+    }
+
+    size_t getHash()const
+    {
+        return (size_t)(x);
     }
 
 protected:

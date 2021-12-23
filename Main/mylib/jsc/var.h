@@ -30,11 +30,12 @@ protected:
 public:
 	var() {}
 	var(double x);
-	//var(const std::string& s);
+	var(const std::string& s);
 	var(const std::u32string& s);
 	var(const var& other) :internalPtr(other.internalPtr) {}
 	template<class T2>
 	var(const var& other, T2* ptr) : internalPtr(other.internalPtr, ptr) {}
+
 	inline bool operator==(var other) const
 	{
 		return internalPtr == other.internalPtr;
@@ -42,4 +43,5 @@ public:
 	var operator()(void);
 
 	String toString()const;
+	size_t getHash()const;
 };

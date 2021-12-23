@@ -11,7 +11,7 @@ const var var::undefined;
 var::var(double x) : var(Number(x))
 {
 }
-//var::var(const std::string&s ):var(String(s)){}
+var::var(const std::string&s ):var(String(s)){}
 var::var(const std::u32string&s ):var(String(s)){}
 
 var var::operator()(void)
@@ -22,9 +22,12 @@ var var::operator()(void)
 
 String var::toString() const
 {
-	if (isUndefined())
-		return String::UndefinedStr;
-	else
-		return getImpl<IValue>()->toString();
+	IValue* impl = getImpl<IValue>();
+	return impl?impl->toString():String::UndefinedStr;
 }
 
+size_t var::getHash()const
+{
+	IValue* impl = getImpl<IValue>();
+	return impl?impl->getHash():0;
+}

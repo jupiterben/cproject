@@ -10,7 +10,10 @@ class IFunctorImpl : public IImpl
 
 public:
     virtual String toString() const { return String(_U("Functor")); }
-
+    virtual size_t getHash()const
+    {
+        return 0;
+    }
 public:
     inline var operator()(void)
     {
