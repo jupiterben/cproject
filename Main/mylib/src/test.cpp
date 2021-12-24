@@ -2,6 +2,11 @@
 #include <jsc/js.h>
 #include "strImpl.h"
 
+var testF(var a, var b)
+{
+	return a;
+}
+
 void UTest1()
 {
 	var s2 = _U("中国");
@@ -19,4 +24,5 @@ void UTest1()
 		console.log(a);
 	}
 	
+	Functor f(testF, a, b);
 }

@@ -2,7 +2,6 @@
 #include <jsc/var.h>
 #include <jsc/number.h>
 #include "numberImpl.h"
-#include "valueImplPool.h"
 
 Number NumberImpl::operator+(const NumberImpl &other) const
 {

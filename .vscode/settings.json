@@ -92,7 +92,12 @@
         "cwctype": "cpp",
         "optional": "cpp",
         "string_view": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "charconv": "cpp",
+        "deque": "cpp",
+        "format": "cpp",
+        "forward_list": "cpp",
+        "stop_token": "cpp"
     },
     "cSpell.words": [
         "immer"

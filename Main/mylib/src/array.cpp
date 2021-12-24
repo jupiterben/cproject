@@ -1,8 +1,7 @@
 #include <jsc/array.h>
 #include "arrayImpl.h"
-#include "valueImplPool.h"
 
-TValueImplPool<ArrayImpl> ArrayImplPool;
+auto& ArrayImplPool = TValueImplPool<ArrayImpl>::GetInstance();
 //////////////////////////////////////////////////////////////////////////
 Array::Array(const var& other) :var(other, other.getImpl<ArrayImpl>())
 {

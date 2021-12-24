@@ -3,7 +3,6 @@
 #include <jsc/functor.h>
 #include <jsc/array.h>
 #include <jsc/str.h>
-
 #include "strImpl.h"
 
 const var var::undefined;
@@ -16,8 +15,8 @@ var::var(const std::u32string&s ):var(String(s)){}
 
 var var::operator()(void)
 {
-	Functor f(*this);
-	return f.isUndefined() ? (*this) : f();
+	IFunctorImpl* impl = getImpl<IFunctorImpl>();
+	return impl ? (*impl)():(*this);
 }
 
 String var::toString() const

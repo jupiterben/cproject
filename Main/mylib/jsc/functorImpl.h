@@ -1,15 +1,17 @@
 #pragma once
 #include <jsc/impl.h>
-#include "c17.hpp"
 #include <jsc/str.h>
 
 class IFunctorImpl : public IImpl
 {
     var result;
     bool isEvaluated = false;
+    mutable std::mutex _mtx;
+
 public:
     inline var operator()(void)
     {
+        std::lock_guard<std::mutex> l(_mtx);
         if (!isEvaluated)
         {
             result = eval();
@@ -27,17 +29,17 @@ struct _FnInternalType
     typedef typename std::decay<_Fx>::type _First;
     typedef std::tuple<typename std::decay<_Types>::type...> _Second;
     typedef std::pair<_First, _Second> Type;
-    Type data;
 };
 
+#include "c17.hpp"
 template <class _Fx, class... _Types>
-class _FunctorBind : public IFunctorImpl
-, public TValueImpl<typename _FnInternalType<_Fx, typename _Types...>::Type>
+class _FunctorBind : public IFunctorImpl, public TValueImpl<typename _FnInternalType<_Fx,_Types...>::Type>
 {
 public:
     using TValueImpl::TValueImpl;
     var eval()
     {
-        return c17::apply(internalData.first, internalData.second);
+        return c17::apply<var>(internalData.first, internalData.second);
     }
+    String toString()const { return _U("[Functor]"); }
 };

@@ -1,6 +1,5 @@
 #include <jsc/object.h>
 #include "objectImpl.h"
-#include "valueImplPool.h"
 
 TValueImplPool<ObjectImpl> ObjectImplPool;
 

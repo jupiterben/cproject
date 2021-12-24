@@ -1,6 +1,5 @@
 #include <jsc/str.h>
 #include "strImpl.h"
-#include "valueImplPool.h"
 
 inline TStr TStr::from(const std::u32string &s)
 {
