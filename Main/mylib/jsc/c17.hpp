@@ -1,9 +1,5 @@
 #pragma once
 #include <type_traits>
-#include <sstream>
-#include <string>
-#include <locale>
-#include <codecvt>
 
 namespace c17
 {

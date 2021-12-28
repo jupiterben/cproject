@@ -23,7 +23,7 @@ Number NumberImpl::operator/(const NumberImpl &other) const
 	return Number(internalData / other.internalData);
 }
 
-TValueImplPool<NumberImpl> NumberImplPool;
+auto& NumberImplPool = TValueImplPool<NumberImpl>::Instance();
 
 //
 Number::Number(int x) : var(NumberImplPool.GetOrCreate(x)) {}

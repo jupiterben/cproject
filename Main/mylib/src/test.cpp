@@ -1,28 +1,25 @@
 
 #include <jsc/js.h>
-#include "strImpl.h"
 
 var testF(var a, var b)
 {
 	return a;
 }
 
+void UTest2()
+{
+	var f = Functor(testF, 1, 1);
+	var f2 = Functor(testF, 1, 2);
+	f();
+	f2();
+}
+
 void UTest1()
 {
-	var s2 = _U("中国");
-	var s1 = _U("hello");
-	Object o = {{s1, s2}, {s2, s1}};
-	Object o2 = {{s1, s2}, {s2, s1}};
-	if (o == o2)
-	{
-		console.log(o);
-	}
-	Array a = {1, o, s1};
-	Array b = {1, o, s1};
-	if (a == b)
-	{
-		console.log(a);
-	}
-	
-	Functor f(testF, a, b);
+	Number a = 1;
+	var b = 2;
+	var c = a + b;
+
+	var f = Functor(testF, a, b);
+	console.log(f());
 }

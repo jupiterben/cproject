@@ -13,4 +13,6 @@ class Object : public var
 public:
 	Object(const InitialMapType &keyValues) ;
 	Object(InitialListType initList) ;
+	
+	Object AddKeyValue(const String &key, const var &value)const;
 };

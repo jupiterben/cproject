@@ -2,7 +2,7 @@
 #include <jsc/impl.h>
 #include <jsc/str.h>
 
-class IFunctorImpl : public IImpl
+class IFunctorImpl : virtual public IImpl
 {
     var result;
     bool isEvaluated = false;
@@ -23,23 +23,31 @@ public:
 };
 
 // usage: var myFunction(var arg1, var arg2, ...){ ... }  Functor f(myFunction, a1, a2);
-template<class _Fx, class... _Types> 
-struct _FnInternalType
+#include <functional>
+template <class _Fx, class... _Types>
+struct _FnTypeTrait
 {
-    typedef typename std::decay<_Fx>::type _First;
-    typedef std::tuple<typename std::decay<_Types>::type...> _Second;
+    using _First = std::decay_t<_Fx>;
+    using _Second = std::tuple<std::decay_t<_Types>...>;
     typedef std::pair<_First, _Second> Type;
 };
 
 #include "c17.hpp"
 template <class _Fx, class... _Types>
-class _FunctorBind : public IFunctorImpl, public TValueImpl<typename _FnInternalType<_Fx,_Types...>::Type>
+class _FunctorBind : public IFunctorImpl, public TValueImpl<typename _FnTypeTrait<_Fx, _Types...>::Type>
 {
 public:
-    using TValueImpl::TValueImpl;
+    typedef _FnTypeTrait<_Fx, _Types...> Trait;
+    typedef typename Trait::Type InternalType;
+    _FunctorBind(const InternalType &d, size_t hash) : TValueImpl<InternalType>(d, hash) {}
     var eval()
     {
-        return c17::apply<var>(internalData.first, internalData.second);
+        return c17::apply<var>(this->internalData.first, this->internalData.second);
     }
-    String toString()const { return _U("[Functor]"); }
+    String toString() const { return _U("[Functor]"); }
+
+    static size_t hash(const InternalType &d)
+    {
+        return 0;
+    }
 };

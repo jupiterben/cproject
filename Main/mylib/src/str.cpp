@@ -6,7 +6,7 @@ inline TStr TStr::from(const std::u32string &s)
 	return fromUTF32((const UChar32 *)s.c_str(), s.length());
 }
 
-TValueImplPool<StrImpl> StrImplPool;
+auto &StrImplPool = TValueImplPool<StrImpl>::Instance();
 
 String StrImpl::toString() const
 {

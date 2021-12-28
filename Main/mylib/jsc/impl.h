@@ -7,7 +7,7 @@ public:
 	virtual ~IImpl() {}
 };
 
-class IValueImpl : public IImpl
+class IValueImpl : virtual public IImpl
 {
 public:
 	virtual String toString() const = 0;
@@ -15,19 +15,24 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
+#include <functional>
 template <class IType>
 class TValueImpl : public IValueImpl
 {
 public:
 	typedef IType InternalType;
-
+public:
 	TValueImpl(const InternalType &d, size_t hash)
 		: internalData(d), _hash(hash) {}
 	inline const InternalType &internal() const { return internalData; }
 	virtual size_t getHash() const { return _hash; }
 	virtual bool equalTo(const InternalType &d) const
 	{
-		return std::equal_to<InternalType>{}(internalData, d);
+		return std::equal_to<InternalType>()(internalData, d);
+	}
+	static size_t hash(const InternalType &d)
+	{
+		return std::hash<IType>()(d);
 	}
 protected:
 	const InternalType internalData;
@@ -41,7 +46,7 @@ protected:
 #include <unordered_map>
 #include <deque>
 #include <mutex>
-template <class ValueType>
+template <typename ValueType>
 class TValueImplPool
 {
 public:
@@ -53,7 +58,7 @@ public:
 	std::unordered_map<size_t, std::list<WeakPtr>> buckets;
 	std::list<SharedPtr> recentValues;
 public:
-	static _MyType& GetInstance()
+	static _MyType &Instance()
 	{
 		static _MyType instance;
 		return instance;
@@ -66,11 +71,10 @@ public:
 			recentValues.pop_front();
 	}
 
-	template <class InitType>
-	SharedPtr GetOrCreate(const typename InitType &internalData)
+	SharedPtr GetOrCreate(const typename ValueType::InternalType &internalData)
 	{
 		std::lock_guard<std::mutex> l(_mtx);
-		size_t hash = std::hash<InitType>{}(internalData);
+		size_t hash = ValueType::hash(internalData);
 		auto &bucket = buckets[hash];
 		for (auto iter = bucket.begin(); iter != bucket.end();)
 		{

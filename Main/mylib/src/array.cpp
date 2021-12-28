@@ -1,11 +1,10 @@
 #include <jsc/array.h>
 #include "arrayImpl.h"
 
-auto& ArrayImplPool = TValueImplPool<ArrayImpl>::GetInstance();
+auto &ArrayImplPool = TValueImplPool<ArrayImpl>::Instance();
 //////////////////////////////////////////////////////////////////////////
 Array::Array(const var& other) :var(other, other.getImpl<ArrayImpl>())
 {
-
 }
 
 Array::Array(std::initializer_list<var> alist)

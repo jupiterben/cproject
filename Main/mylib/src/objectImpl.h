@@ -22,6 +22,7 @@ struct std::hash<ObjectInternalType>
 		for (auto itr = data.begin(); itr != data.end(); ++itr)
 		{
 			h = h ^ (size_t)(itr->first.getHash());
+			h = h ^ (size_t)(itr->second.getHash());
 		}
 		return h;
 	}

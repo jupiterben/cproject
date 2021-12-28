@@ -16,14 +16,14 @@ public:
 class StringStreamImpl : public IImpl
 {
 public:
-	StringStreamImpl():buffer(nullptr, 50) {}
+	StringStreamImpl():buffer(nullptr, 10) {}
     StringStreamImpl &operator<<(const TStr &s)
     {
         buffer.append(s);
         return *this;
     }
     TStr str() const { return buffer; }
-    inline void Clear() { buffer = TStr(nullptr, 50); }
+    inline void Clear() { buffer = TStr(nullptr, 10); }
 
 protected:
     TStr buffer;

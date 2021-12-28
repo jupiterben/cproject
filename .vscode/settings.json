@@ -101,5 +101,7 @@
     },
     "cSpell.words": [
         "immer"
-    ]
+    ],
+    "cmake.buildDirectory": "${workspaceFolder}/build/",
+    "cmake.setBuildTypeOnMultiConfig": true
 }

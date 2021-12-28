@@ -2,6 +2,7 @@
 #include "var.h"
 #include <string>
 #define _U(x) std::u32string(U##x)
+#define _A(x) std::string(x)
 
 class TStr;
 class String : public var
