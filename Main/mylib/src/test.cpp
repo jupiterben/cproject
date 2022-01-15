@@ -22,4 +22,13 @@ void UTest1()
 
 	var f = Functor(testF, a, b);
 	console.log(f());
+
+	var s = Switch(a)
+			.Case(1, 3)
+			.Case(2, 3)
+			.Default(4);
+
+	
+			
+	console.log(s());
 }

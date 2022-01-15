@@ -8,5 +8,4 @@
 #include <jsc/array.h>
 #include <jsc/console.h>
 
-
 #include <jsc/test.h>

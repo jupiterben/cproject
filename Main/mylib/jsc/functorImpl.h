@@ -22,6 +22,29 @@ public:
     virtual var eval() = 0;
 };
 
+class _SwitchCaseImpl : virtual public IFunctorImpl
+{
+public:
+    var defaultValue;
+    std::unordered_map<var, var> cases;
+    var evalValue;
+
+    virtual var eval()
+    {
+        auto ite = cases.find(evalValue);
+        return ite == cases.end() ? defaultValue : (ite->second);
+    }
+    void addCase(var cond, var value)
+    {
+        cases[cond()] = value;
+    }
+    String toString() const { return _U("[_SwitchCase]"); }
+	size_t getHash() const
+    {
+        return 0;
+    }
+};
+
 // usage: var myFunction(var arg1, var arg2, ...){ ... }  Functor f(myFunction, a1, a2);
 #include <functional>
 template <class _Fx, class... _Types>
@@ -44,7 +67,7 @@ public:
     {
         return c17::apply<var>(this->internalData.first, this->internalData.second);
     }
-    String toString() const { return _U("[Functor]"); }
+    String toString() const { return _U("[_FunctorBind]"); }
 
     static size_t hash(const InternalType &d)
     {

@@ -21,12 +21,12 @@ var var::operator()(void)
 
 String var::toString() const
 {
-	IValueImpl* impl = getImpl<IValueImpl>();
+	IImpl* impl = getImpl<IImpl>();
 	return impl?impl->toString():String::UndefinedStr;
 }
 
 size_t var::getHash()const
 {
-	IValueImpl* impl = getImpl<IValueImpl>();
+	IImpl* impl = getImpl<IImpl>();
 	return impl?impl->getHash():0;
 }

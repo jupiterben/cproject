@@ -26,8 +26,8 @@ String::String(const TStr &s) : var(StrImplPool.GetOrCreate(s))
 {
 }
 
-String::String(const std::string& s)
-: String(std::u32string(s.begin(), s.end()))
+String::String(const std::string &s)
+	: String(std::u32string(s.begin(), s.end()))
 {
 }
 
@@ -52,21 +52,20 @@ const TStr &String::str() const
 }
 
 ///
-StringStream::StringStream() : var(createInternal<StringStreamImpl>())
+StringStream::StringStream() : impl(std::make_shared<StringStreamImpl>())
 {
 }
+
 StringStream &StringStream::operator<<(const std::u32string &s)
 {
 	return (*this) << TStr::from(s);
 }
 StringStream &StringStream::operator<<(const String &s)
 {
-	StringStreamImpl* impl = getImpl<StringStreamImpl>();
 	(*impl) << s.str();
 	return *this;
 }
 String StringStream::str() const
 {
-	StringStreamImpl* impl = getImpl<StringStreamImpl>();
 	return impl->str();
 }

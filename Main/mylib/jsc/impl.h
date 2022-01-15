@@ -4,14 +4,14 @@ class String;
 class IImpl
 {
 public:
+	virtual String toString() const = 0;
+	virtual size_t getHash() const = 0;
 	virtual ~IImpl() {}
 };
 
 class IValueImpl : virtual public IImpl
 {
 public:
-	virtual String toString() const = 0;
-	virtual size_t getHash() const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,6 +21,7 @@ class TValueImpl : public IValueImpl
 {
 public:
 	typedef IType InternalType;
+
 public:
 	TValueImpl(const InternalType &d, size_t hash)
 		: internalData(d), _hash(hash) {}
@@ -34,6 +35,7 @@ public:
 	{
 		return std::hash<IType>()(d);
 	}
+
 protected:
 	const InternalType internalData;
 	size_t _hash;
@@ -53,10 +55,12 @@ public:
 	typedef TValueImplPool<ValueType> _MyType;
 	typedef std::shared_ptr<ValueType> SharedPtr;
 	typedef std::weak_ptr<ValueType> WeakPtr;
+
 public:
 	mutable std::mutex _mtx;
 	std::unordered_map<size_t, std::list<WeakPtr>> buckets;
 	std::list<SharedPtr> recentValues;
+
 public:
 	static _MyType &Instance()
 	{

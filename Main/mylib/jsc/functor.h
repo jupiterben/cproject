@@ -24,3 +24,29 @@ protected:
 		return pool.GetOrCreate(internalData);
 	}
 };
+
+#include "./functorImpl.h"
+class _SwitchCaseImpl;
+class SwitchBuilder
+{
+private:
+	std::shared_ptr<_SwitchCaseImpl> m_pImpl;
+
+public:
+	SwitchBuilder(const var &v)
+		: m_pImpl(std::make_shared<_SwitchCaseImpl>())
+	{
+		m_pImpl->evalValue = v;
+	}
+	SwitchBuilder &Case(const var &cond, const var &v)
+	{
+		m_pImpl->addCase(cond, v);
+		return *this;
+	}
+	var Default(const var &v)
+	{
+		m_pImpl->defaultValue = v;
+		return var(m_pImpl);
+	}
+};
+typedef SwitchBuilder Switch;

@@ -20,8 +20,12 @@ public:
 	const TStr &str() const;
 };
 
-class StringStream : public var
+
+class StringStreamImpl;
+class StringStream
 {
+protected:
+	std::shared_ptr<StringStreamImpl> impl;
 public:
 	StringStream();
 	StringStream &operator<<(const std::u32string& s);

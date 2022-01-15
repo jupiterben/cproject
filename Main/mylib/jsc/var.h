@@ -18,10 +18,8 @@ public:
 	inline T2* getImpl() const { return dynamic_cast<T2*>(getInternalPtr()); }
 
 	inline bool isUndefined() const { return getInternalPtr() == nullptr; }
-
-protected:
 	var(const InternalPtrType& ptr) :internalPtr(ptr) {}
-
+protected:
 	template <class _ImplType, class... _Types>
 	inline static var createInternal(_Types &&..._Args)
 	{ // make a shared_ptr
@@ -45,4 +43,13 @@ public:
 
 	String toString()const;
 	size_t getHash()const;
+};
+
+template<>
+struct std::hash<var>
+{
+    std::size_t operator()(const var &d) const noexcept
+    {
+		return d.getHash();
+    }
 };

@@ -12,11 +12,10 @@ public:
     static TStr from(const std::u32string &s);
 };
 
-
-class StringStreamImpl : public IImpl
+class StringStreamImpl
 {
 public:
-	StringStreamImpl():buffer(nullptr, 10) {}
+    StringStreamImpl() : buffer(nullptr, 10) {}
     StringStreamImpl &operator<<(const TStr &s)
     {
         buffer.append(s);
@@ -24,26 +23,25 @@ public:
     }
     TStr str() const { return buffer; }
     inline void Clear() { buffer = TStr(nullptr, 10); }
-
 protected:
     TStr buffer;
 };
 
-template<>
+template <>
 struct std::hash<TStr>
 {
-	std::size_t operator()(const TStr &str) const noexcept
-	{
-		return str.hashCode();
-	}
+    std::size_t operator()(const TStr &str) const noexcept
+    {
+        return str.hashCode();
+    }
 };
 template <>
 struct std::equal_to<TStr>
 {
-	bool operator()(const TStr& s1, const TStr& s2)const noexcept
-	{
-		return (s1 == s2) != UBool(0);
-	}
+    bool operator()(const TStr &s1, const TStr &s2) const noexcept
+    {
+        return (s1 == s2) != UBool(0);
+    }
 };
 
 class StrImpl : public TValueImpl<TStr>
