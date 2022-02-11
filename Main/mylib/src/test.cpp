@@ -28,7 +28,5 @@ void UTest1()
 			.Case(2, 3)
 			.Default(4);
 
-	
-			
 	console.log(s());
 }

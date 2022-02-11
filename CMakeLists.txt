@@ -10,13 +10,14 @@ if(MSVC)
 else()
   set(VCPKG_TARGET_TRIPLET "x64-osx" CACHE STRING "VCPKG Target Triplet to use")
 endif()
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 if(MSVC)
   set(CMAKE_CXX_FLAGS_DEBUG   "-Od" )             # 调试包不优化
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG " )   # release包优化
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /ZI")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4819")
-  add_definitions(-DNOMINMAX -DUNICODE -D_UNICODE)
 elseif(EMSCRIPTEN)
   set(CMAKE_CXX_FLAGS_DEBUG "-g4")
   set(CMAKE_EXECUTABLE_SUFFIX ".js")
@@ -26,14 +27,7 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 endif()
 
-
-
-add_subdirectory(main)
-#add_subdirectory(examples)
+#add_subdirectory(main)
+add_subdirectory(examples)
 #add_subdirectory(test)
-
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
-
-
-
 

@@ -1,4 +1,3 @@
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 file(GLOB_RECURSE SRC_FILES *.h *.cxx *.cpp) 
 
 project(myapp)
