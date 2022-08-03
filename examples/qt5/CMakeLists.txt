@@ -1,6 +1,4 @@
 
-cmake_minimum_required(VERSION 3.1.0)
-
 project(qt5Example VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -21,5 +19,5 @@ file(GLOB APP_SOURCE *.cpp *.qrc *.ui)
 source_group("Header" FILES ${APP_HEADER})
 source_group("Source" FILES ${APP_SOURCE})
 
-add_executable(${PROJECT_NAME} ${APP_SOURCE})
+add_executable(${PROEJCT_NAME} ${APP_SOURCE})
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
