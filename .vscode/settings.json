@@ -103,5 +103,6 @@
         "immer"
     ],
     "cmake.buildDirectory": "${workspaceFolder}/build/",
-    "cmake.setBuildTypeOnMultiConfig": true
+    "cmake.setBuildTypeOnMultiConfig": true,
+    "cmake.sourceDirectory": "E:/source/cproject/examples/fbxsdk/ImportScene"
 }

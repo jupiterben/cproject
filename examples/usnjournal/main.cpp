@@ -6,9 +6,7 @@
 void GetError(LPTSTR lpszFunction)
 {
 	// Retrieve the system error message for the last-error code
-
 	LPVOID lpMsgBuf;
-
 	DWORD dw = GetLastError();
 	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
@@ -21,7 +19,6 @@ void GetError(LPTSTR lpszFunction)
 		0, NULL);
 
 	// Display the error message and exit the process
-
 	LPVOID lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,
 		(lstrlen((LPCTSTR)lpMsgBuf) + lstrlen((LPCTSTR)lpszFunction) + 40) * sizeof(TCHAR));
 	StringCchPrintf((LPTSTR)lpDisplayBuf,
@@ -36,7 +33,6 @@ void GetError(LPTSTR lpszFunction)
 
 
 #define BUF_LEN 4096
-
 void main()
 {
 	HANDLE hVol;
@@ -105,7 +101,6 @@ void main()
 		}
 
 		dwRetBytes = dwBytes - sizeof(USN);
-
 		// Find the first record
 		UsnRecord = (PUSN_RECORD)(((PUCHAR)Buffer) + sizeof(USN));
 
@@ -114,8 +109,7 @@ void main()
 		// This loop could go on for a long time, given the current buffer size.
 		while (dwRetBytes > 0)
 		{
-			if 
-
+			strfind
 			printf("USN: %I64x\n", UsnRecord->Usn);
 			printf("File name: %.*S\n",
 				UsnRecord->FileNameLength / 2,
